@@ -1,14 +1,19 @@
-<p align="center"><br><img src="https://user-images.githubusercontent.com/236501/85893648-1c92e880-b7a8-11ea-926d-95355b8175c7.png" width="128" height="128" /></p>
+<a href="https://capgo.app/"><img src='https://raw.githubusercontent.com/Cap-go/capgo/main/assets/capgo_banner.png' alt='Capgo - Instant updates for capacitor'/></a>
+
+<div align="center">
+<h2><a href="https://capgo.app/">Check out: Capgo — Instant updates for capacitor</a></h2>
+</div>
+
 <h3 align="center">Native Audio</h3>
 <p align="center"><strong><code>@capgo/native-audio</code></strong></p>
 <p align="center">
-  Capacitor community plugin for playing sounds.
+  Capacitor plugin for playing sounds.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/maintenance/yes/2021?style=flat-square" />
-  <a href="https://github.com/capacitor-community/native-audio/actions?query=workflow%3A%22Test+and+Build+Plugin%22"><img src="https://img.shields.io/github/workflow/status/capacitor-community/native-audio/Test%20and%20Build%20Plugin?style=flat-square" /></a>
-  <a href="https://www.npmjs.com/package/@capgo/native-audio"><img src="https://img.shields.io/npm/l/@capgo/native-audio?style=flat-square" /></a>
+  <img src="https://img.shields.io/maintenance/yes/2022?style=flat-square" />
+  <a href="https://github.com/capgo/native-audio/actions?query=workflow%3A%22Test+and+Build+Plugin%22"><img src="https://img.shields.io/github/workflow/status/@capgo/native-audio/Test%20and%20Build%20Plugin?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/capgo/native-audio"><img src="https://img.shields.io/npm/l/@capgo/native-audio?style=flat-square" /></a>
 <br>
   <a href="https://www.npmjs.com/package/@capgo/native-audio"><img src="https://img.shields.io/npm/dw/@capgo/native-audio?style=flat-square" /></a>
   <a href="https://www.npmjs.com/package/@capgo/native-audio"><img src="https://img.shields.io/npm/v/@capgo/native-audio?style=flat-square" /></a>
