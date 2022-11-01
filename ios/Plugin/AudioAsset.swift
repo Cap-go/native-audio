@@ -3,7 +3,7 @@
 //  Plugin
 //
 //  Created by priyank on 2020-05-29.
-//  Copyright © 2020 Max Lynch. All rights reserved.
+//  Copyright © 2022 Martin Donadieu. All rights reserved.
 //
 
 import AVFoundation

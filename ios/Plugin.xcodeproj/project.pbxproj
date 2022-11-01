@@ -469,7 +469,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)\n$(FRAMEWORK_SEARCH_PATHS)\n$(FRAMEWORK_SEARCH_PATHS)";
 				MARKETING_VERSION = 0.1;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.getcapacitor.community.audio;
+				PRODUCT_BUNDLE_IDENTIFIER = ee.forgr.audio;
 				PRODUCT_NAME = NativeAudio;
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
@@ -497,7 +497,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				MARKETING_VERSION = 0.1;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.getcapacitor.community.audio;
+				PRODUCT_BUNDLE_IDENTIFIER = ee.forgr.audio;
 				PRODUCT_NAME = NativeAudio;
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;

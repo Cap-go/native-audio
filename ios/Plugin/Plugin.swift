@@ -40,7 +40,7 @@ public class NativeAudio: CAPPlugin {
                 if focus {
                     try self.session.setCategory(AVAudioSession.Category.playback)
                 } else {
-                    try self.session.setCategory(AVAudioSession.Category.playback, options: .mixWithOthers)
+                    try self.session.setCategory(AVAudioSession.Category.ambient)
                 }
             } catch {
                 print("Failed to set setCategory audio")
@@ -56,7 +56,7 @@ public class NativeAudio: CAPPlugin {
         let audioId = call.getString(Constant.AssetIdKey) ?? ""
         let time = call.getDouble("time") ?? 0
         if audioId != "" {
-            let queue = DispatchQueue(label: "com.getcapacitor.community.audio.complex.queue", qos: .userInitiated)
+            let queue = DispatchQueue(label: "ee.forgr.audio.complex.queue", qos: .userInitiated)
 
             queue.async {
                 if self.audioList.count > 0 {
@@ -145,7 +145,6 @@ public class NativeAudio: CAPPlugin {
 
         do {
             try stopAudio(audioId: audioId)
-            call.resolve()
         } catch {
             call.reject(Constant.ErrorAssetNotFound)
         }
@@ -221,7 +220,7 @@ public class NativeAudio: CAPPlugin {
             }
 
             let asset = audioList[audioId]
-            let queue = DispatchQueue(label: "com.getcapacitor.community.audio.simple.queue", qos: .userInitiated)
+            let queue = DispatchQueue(label: "ee.forgr.audio.simple.queue", qos: .userInitiated)
 
             queue.async {
                 if asset == nil {
@@ -250,8 +249,6 @@ public class NativeAudio: CAPPlugin {
                     } else {
                         call.reject(Constant.ErrorAssetPath + " - " + assetPath)
                     }
-                } else {
-                    call.reject(Constant.ErrorAssetExists)
                 }
             }
         }
