@@ -1,6 +1,6 @@
 <p align="center"><br><img src="https://user-images.githubusercontent.com/236501/85893648-1c92e880-b7a8-11ea-926d-95355b8175c7.png" width="128" height="128" /></p>
 <h3 align="center">Native Audio</h3>
-<p align="center"><strong><code>@capacitor-community/native-audio</code></strong></p>
+<p align="center"><strong><code>@capgo/native-audio</code></strong></p>
 <p align="center">
   Capacitor community plugin for playing sounds.
 </p>
@@ -8,10 +8,10 @@
 <p align="center">
   <img src="https://img.shields.io/maintenance/yes/2021?style=flat-square" />
   <a href="https://github.com/capacitor-community/native-audio/actions?query=workflow%3A%22Test+and+Build+Plugin%22"><img src="https://img.shields.io/github/workflow/status/capacitor-community/native-audio/Test%20and%20Build%20Plugin?style=flat-square" /></a>
-  <a href="https://www.npmjs.com/package/@capacitor-community/native-audio"><img src="https://img.shields.io/npm/l/@capacitor-community/native-audio?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@capgo/native-audio"><img src="https://img.shields.io/npm/l/@capgo/native-audio?style=flat-square" /></a>
 <br>
-  <a href="https://www.npmjs.com/package/@capacitor-community/native-audio"><img src="https://img.shields.io/npm/dw/@capacitor-community/native-audio?style=flat-square" /></a>
-  <a href="https://www.npmjs.com/package/@capacitor-community/native-audio"><img src="https://img.shields.io/npm/v/@capacitor-community/native-audio?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@capgo/native-audio"><img src="https://img.shields.io/npm/dw/@capgo/native-audio?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@capgo/native-audio"><img src="https://img.shields.io/npm/v/@capgo/native-audio?style=flat-square" /></a>
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 <a href="#contributors-"><img src="https://img.shields.io/badge/all%20contributors-6-orange?style=flat-square" /></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
@@ -20,7 +20,7 @@
 # Capacitor Native Audio Plugin
 
 Capacitor plugin for native audio engine.
-Capacitor v3 - ✅ Support!
+Capacitor v3/v4 - ✅ Support!
 
 Click on video to see example 💥
 
@@ -31,31 +31,25 @@ Click on video to see example 💥
 
 | Maintainer    | GitHub                                      | Social                              |
 | ------------- | ------------------------------------------- | ----------------------------------- |
-| Maxim Bazuev  | [bazuka5801](https://github.com/bazuka5801) | [Telegram](https://t.me/bazuka5801) |
+| Martin Donadieu  | [riderx](https://github.com/riderx) | [Telegram](https://t.me/martindonadieu) |
 
 Mainteinance Status: Actively Maintained
 
 ## Preparation
-All audio place in specific platform folder
-
-Andoid: `android/app/src/assets`
-
-iOS: `ios/App/App/sounds`
-
-Web: `assets/sounds`
+All audio files must be with the rest of your source files.
 
 ## Installation
 
 To use npm
 
 ```bash
-npm install @capacitor-community/native-audio
+npm install @capgo/native-audio
 ```
 
 To use yarn
 
 ```bash
-yarn add @capacitor-community/native-audio
+yarn add @capgo/native-audio
 ```
 
 Sync native files
@@ -98,7 +92,7 @@ No configuration required for this plugin.
 [Example repository](https://github.com/bazuka5801/native-audio-example)
 
 ```typescript
-import {NativeAudio} from '@capacitor-community/native-audio'
+import {NativeAudio} from '@capgo/native-audio'
 
 
 /**
