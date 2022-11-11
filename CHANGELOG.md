@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.1](https://github.com/Cap-go/native-audio/compare/v4.1.0...v4.1.1) (2022-11-11)
+
+
+### Bug Fixes
+
+* update to cap 4 ([b99e841](https://github.com/Cap-go/native-audio/commit/b99e841b7e0c01a43742793d265100ed4a7a25d3))
+
 ## 4.1.0 (2022-11-01)
 
 
