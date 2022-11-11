@@ -56,12 +56,12 @@
     "prettier": "^2.7.1",
     "prettier-plugin-java": "^1.6.2",
     "rimraf": "^3.0.2",
-    "rollup": "^2.79.1",
+    "rollup": "^3.2.5",
     "swiftlint": "^1.0.1",
     "typescript": "^4.8.4"
   },
   "peerDependencies": {
-    "@capacitor/core": "^3.0.0 || ^4.0.0"
+    "@capacitor/core": "^4.0.0"
   },
   "capacitor": {
     "ios": {
