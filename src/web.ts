@@ -5,7 +5,7 @@ import type { ConfigureOptions, PreloadOptions } from './definitions';
 import { NativeAudio } from './definitions';
 
 export class NativeAudioWeb extends WebPlugin implements NativeAudio {
-  private static readonly FILE_LOCATION: string = 'assets/sounds';
+  private static readonly FILE_LOCATION: string = '';
   private static readonly AUDIO_ASSET_BY_ASSET_ID: Map<string, AudioAsset> = new Map<string, AudioAsset>();
 
   constructor() {
