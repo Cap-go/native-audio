@@ -436,6 +436,7 @@ public class NativeAudio extends Plugin implements AudioManager.OnAudioFocusChan
                 AudioAsset asset = audioAssetList.get(audioId);
                 if (LOOP.equals(action) && asset != null) {
                     asset.loop();
+                    call.resolve();
                 } else if (asset != null) {
                     asset.play(
                         time,
@@ -448,6 +449,8 @@ public class NativeAudio extends Plugin implements AudioManager.OnAudioFocusChan
                             }
                         }
                     );
+                } else {
+                    call.reject("Error with asset");
                 }
             }
         } catch (Exception ex) {
