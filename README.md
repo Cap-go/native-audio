@@ -25,7 +25,7 @@
 # Capacitor Native Audio Plugin
 
 Capacitor plugin for native audio engine.
-Capacitor v3/v4 - ✅ Support!
+Capacitor v4 - ✅ Support!
 
 Click on video to see example 💥
 
@@ -77,7 +77,7 @@ No configuration required for this plugin.
 
 ## Supported methods
 
-| Name           | Android | iOS | Web |
+| Name           | Android | iOS | Web |https://github.com/Cap-go/native-audio
 | :------------- | :------ | :-- | :-- |
 | configure      | ✅      | ✅  | ❌  |
 | preload        | ✅      | ✅  | ✅  |
