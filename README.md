@@ -77,7 +77,7 @@ No configuration required for this plugin.
 
 ## Supported methods
 
-| Name           | Android | iOS | Web |https://github.com/Cap-go/native-audio
+| Name           | Android | iOS | Web |
 | :------------- | :------ | :-- | :-- |
 | configure      | ✅      | ✅  | ❌  |
 | preload        | ✅      | ✅  | ✅  |
