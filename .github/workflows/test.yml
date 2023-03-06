@@ -1,9 +1,9 @@
-name: Build source code and send to Capgo
+name: Build source code and test it
 
 on:
   push:
-    tags:
-      - "*"
+    branches:
+      - renovate/**
 
 jobs:
   build_android:
@@ -49,10 +49,9 @@ jobs:
       - name: Build
         id: build_code
         run: pnpm verify:ios
-  deploy:
-    needs: [build_android, build_ios]
+  web:
     runs-on: ubuntu-latest
-    name: "Build code and release"
+    name: 'Build code and test'
     steps:
       - name: Check out
         uses: actions/checkout@v3
@@ -76,12 +75,3 @@ jobs:
       - name: Verify
         id: verify_code
         run: pnpm verify:web
-      - uses: JS-DevTools/npm-publish@v1
-        if: "!contains(github.ref, '-alpha.')"
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-      - uses: JS-DevTools/npm-publish@v1
-        if: "contains(github.ref, '-alpha.')"
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          tag: next
