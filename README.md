@@ -41,7 +41,11 @@ Click on video to see example 💥
 Mainteinance Status: Actively Maintained
 
 ## Preparation
+
 All audio files must be with the rest of your source files.
+
+First make your sound file end up in your builded code folder, example in folder `BUILDFOLDER/assets/sounds/FILENAME.mp3`
+Then use it in preload like that `assets/sounds/FILENAME.mp3`
 
 ## Installation
 
@@ -114,8 +118,6 @@ NativeAudio.preload({
     audioChannelNum: 1,
     isUrl: false
 });
-// First make your sound file end up in your builded code folder, exemple in folder `build/assets/sounds/FILENAME.mp3`
-// then use in preload lkike that `assets/sounds/FILENAME.mp3`
 
 /**
  * This method will play the loaded audio file if present in the memory.
