@@ -110,10 +110,12 @@ import {NativeAudio} from '@capgo/native-audio'
  */
 NativeAudio.preload({
     assetId: "fire",
-    assetPath: "fire.mp3",
+    assetPath: "assets/sounds/fire.mp3",
     audioChannelNum: 1,
     isUrl: false
 });
+// First make your sound file end up in your builded code folder, exemple in folder `build/assets/sounds/FILENAME.mp3`
+// then use in preload lkike that `assets/sounds/FILENAME.mp3`
 
 /**
  * This method will play the loaded audio file if present in the memory.
