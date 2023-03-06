@@ -407,6 +407,10 @@ public class NativeAudio extends Plugin implements AudioManager.OnAudioFocusChan
                     ParcelFileDescriptor p = ParcelFileDescriptor.open(f, ParcelFileDescriptor.MODE_READ_ONLY);
                     assetFileDescriptor = new AssetFileDescriptor(p, 0, -1);
                 } else {
+                    // if fullPath dont start with public/ add it
+                    if (!fullPath.startsWith("public/")) {
+                        fullPath = "public/".concat(fullPath);
+                    }
                     Context ctx = getBridge().getActivity().getApplicationContext();
                     AssetManager am = ctx.getResources().getAssets();
                     assetFileDescriptor = am.openFd(fullPath);

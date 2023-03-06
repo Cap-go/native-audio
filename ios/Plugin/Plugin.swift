@@ -225,6 +225,9 @@ public class NativeAudio: CAPPlugin {
                 if asset == nil {
                     var basePath: String?
                     if isUrl == false {
+                        // if assetPath dont start with public/ add it
+                        assetPath = assetPath.starts(with: "public/") ? assetPath : "public/" + assetPath 
+
                         let assetPathSplit = assetPath.components(separatedBy: ".")
                         basePath = Bundle.main.path(forResource: assetPathSplit[0], ofType: assetPathSplit[1])
                     } else {
