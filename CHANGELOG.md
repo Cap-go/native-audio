@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.0.9](https://github.com/Cap-go/native-audio/compare/v5.0.8...v5.0.9) (2023-03-06)
+
+### Bug Fixes
+
+- remove useless file ([2046874](https://github.com/Cap-go/native-audio/commit/2046874f55c846d9caf68d33adcd512b488bfd3a))
+
 ### [5.0.8](https://github.com/Cap-go/native-audio/compare/v5.0.7...v5.0.8) (2023-03-06)
 
 ### Bug Fixes
