@@ -200,7 +200,7 @@ public class NativeAudio: CAPPlugin {
         let isUrl: Bool?
 
         if audioId != "" {
-            let assetPath: String = call.getString(Constant.AssetPathKey) ?? ""
+            var assetPath: String = call.getString(Constant.AssetPathKey) ?? ""
 
             if complex {
                 volume = call.getFloat("volume") ?? 1.0
