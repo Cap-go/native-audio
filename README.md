@@ -31,12 +31,11 @@ Click on video to see example 💥
 
 [![YouTube Example](https://img.youtube.com/vi/XpUGlWWtwHs/0.jpg)](https://www.youtube.com/watch?v=XpUGlWWtwHs)
 
-
 ## Maintainers
 
-| Maintainer    | GitHub                                      | Social                              |
-| ------------- | ------------------------------------------- | ----------------------------------- |
-| Martin Donadieu  | [riderx](https://github.com/riderx) | [Telegram](https://t.me/martindonadieu) |
+| Maintainer      | GitHub                              | Social                                  |
+| --------------- | ----------------------------------- | --------------------------------------- |
+| Martin Donadieu | [riderx](https://github.com/riderx) | [Telegram](https://t.me/martindonadieu) |
 
 Mainteinance Status: Actively Maintained
 
@@ -73,9 +72,8 @@ On iOS, Android and Web, no further steps are needed.
 
 No configuration required for this plugin.
 <docgen-config>
+
 <!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
-
-
 
 </docgen-config>
 
@@ -214,167 +212,172 @@ NativeAudio.isPlaying({
 ### configure(...)
 
 ```typescript
-configure(options: ConfigureOptions) => Promise<void>
+configure(options: ConfigureOptions) => any
 ```
 
 | Param         | Type                                                          |
 | ------------- | ------------------------------------------------------------- |
 | **`options`** | <code><a href="#configureoptions">ConfigureOptions</a></code> |
 
---------------------
+**Returns:** <code>any</code>
 
+---
 
 ### preload(...)
 
 ```typescript
-preload(options: PreloadOptions) => Promise<void>
+preload(options: PreloadOptions) => any
 ```
 
 | Param         | Type                                                      |
 | ------------- | --------------------------------------------------------- |
 | **`options`** | <code><a href="#preloadoptions">PreloadOptions</a></code> |
 
---------------------
+**Returns:** <code>any</code>
 
+---
 
 ### play(...)
 
 ```typescript
-play(options: { assetId: string; time: number; }) => Promise<void>
+play(options: { assetId: string; time?: number; }) => any
 ```
 
-| Param         | Type                                            |
-| ------------- | ----------------------------------------------- |
-| **`options`** | <code>{ assetId: string; time: number; }</code> |
+| Param         | Type                                             |
+| ------------- | ------------------------------------------------ |
+| **`options`** | <code>{ assetId: string; time?: number; }</code> |
 
---------------------
+**Returns:** <code>any</code>
 
+---
 
 ### pause(...)
 
 ```typescript
-pause(options: { assetId: string; }) => Promise<void>
+pause(options: { assetId: string; }) => any
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
 
---------------------
+**Returns:** <code>any</code>
 
+---
 
 ### resume(...)
 
 ```typescript
-resume(options: { assetId: string; }) => Promise<void>
+resume(options: { assetId: string; }) => any
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
 
---------------------
+**Returns:** <code>any</code>
 
+---
 
 ### loop(...)
 
 ```typescript
-loop(options: { assetId: string; }) => Promise<void>
+loop(options: { assetId: string; }) => any
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
 
---------------------
+**Returns:** <code>any</code>
 
+---
 
 ### stop(...)
 
 ```typescript
-stop(options: { assetId: string; }) => Promise<void>
+stop(options: { assetId: string; }) => any
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
 
---------------------
+**Returns:** <code>any</code>
 
+---
 
 ### unload(...)
 
 ```typescript
-unload(options: { assetId: string; }) => Promise<void>
+unload(options: { assetId: string; }) => any
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
 
---------------------
+**Returns:** <code>any</code>
 
+---
 
 ### setVolume(...)
 
 ```typescript
-setVolume(options: { assetId: string; volume: number; }) => Promise<void>
+setVolume(options: { assetId: string; volume: number; }) => any
 ```
 
 | Param         | Type                                              |
 | ------------- | ------------------------------------------------- |
 | **`options`** | <code>{ assetId: string; volume: number; }</code> |
 
---------------------
+**Returns:** <code>any</code>
 
+---
 
 ### getCurrentTime(...)
 
 ```typescript
-getCurrentTime(options: { assetId: string; }) => Promise<{ currentTime: number; }>
+getCurrentTime(options: { assetId: string; }) => any
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
 
-**Returns:** <code>Promise&lt;{ currentTime: number; }&gt;</code>
+**Returns:** <code>any</code>
 
---------------------
-
+---
 
 ### getDuration(...)
 
 ```typescript
-getDuration(options: { assetId: string; }) => Promise<{ duration: number; }>
+getDuration(options: { assetId: string; }) => any
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
 
-**Returns:** <code>Promise&lt;{ duration: number; }&gt;</code>
+**Returns:** <code>any</code>
 
---------------------
-
+---
 
 ### isPlaying(...)
 
 ```typescript
-isPlaying(options: { assetId: string; }) => Promise<{ isPlaying: boolean; }>
+isPlaying(options: { assetId: string; }) => any
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
 
-**Returns:** <code>Promise&lt;{ isPlaying: boolean; }&gt;</code>
+**Returns:** <code>any</code>
 
---------------------
-
+---
 
 ### Interfaces
-
 
 #### ConfigureOptions
 
@@ -382,7 +385,6 @@ isPlaying(options: { assetId: string; }) => Promise<{ isPlaying: boolean; }>
 | ----------- | -------------------- |
 | **`fade`**  | <code>boolean</code> |
 | **`focus`** | <code>boolean</code> |
-
 
 #### PreloadOptions
 
