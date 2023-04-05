@@ -212,168 +212,162 @@ NativeAudio.isPlaying({
 ### configure(...)
 
 ```typescript
-configure(options: ConfigureOptions) => any
+configure(options: ConfigureOptions) => Promise<void>
 ```
 
 | Param         | Type                                                          |
 | ------------- | ------------------------------------------------------------- |
 | **`options`** | <code><a href="#configureoptions">ConfigureOptions</a></code> |
 
-**Returns:** <code>any</code>
-
 ---
 
 ### preload(...)
 
 ```typescript
-preload(options: PreloadOptions) => any
+preload(options: PreloadOptions) => Promise<void>
 ```
 
 | Param         | Type                                                      |
 | ------------- | --------------------------------------------------------- |
 | **`options`** | <code><a href="#preloadoptions">PreloadOptions</a></code> |
 
-**Returns:** <code>any</code>
-
 ---
 
 ### play(...)
 
 ```typescript
-play(options: { assetId: string; time?: number; }) => any
+play(options: { assetId: string; time?: number; }) => Promise<void>
 ```
 
 | Param         | Type                                             |
 | ------------- | ------------------------------------------------ |
 | **`options`** | <code>{ assetId: string; time?: number; }</code> |
 
-**Returns:** <code>any</code>
-
 ---
 
 ### pause(...)
 
 ```typescript
-pause(options: { assetId: string; }) => any
+pause(options: { assetId: string; }) => Promise<void>
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
-
-**Returns:** <code>any</code>
 
 ---
 
 ### resume(...)
 
 ```typescript
-resume(options: { assetId: string; }) => any
+resume(options: { assetId: string; }) => Promise<void>
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
-
-**Returns:** <code>any</code>
 
 ---
 
 ### loop(...)
 
 ```typescript
-loop(options: { assetId: string; }) => any
+loop(options: { assetId: string; }) => Promise<void>
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
-
-**Returns:** <code>any</code>
 
 ---
 
 ### stop(...)
 
 ```typescript
-stop(options: { assetId: string; }) => any
+stop(options: { assetId: string; }) => Promise<void>
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
-
-**Returns:** <code>any</code>
 
 ---
 
 ### unload(...)
 
 ```typescript
-unload(options: { assetId: string; }) => any
+unload(options: { assetId: string; }) => Promise<void>
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
-
-**Returns:** <code>any</code>
 
 ---
 
 ### setVolume(...)
 
 ```typescript
-setVolume(options: { assetId: string; volume: number; }) => any
+setVolume(options: { assetId: string; volume: number; }) => Promise<void>
 ```
 
 | Param         | Type                                              |
 | ------------- | ------------------------------------------------- |
 | **`options`** | <code>{ assetId: string; volume: number; }</code> |
 
-**Returns:** <code>any</code>
+---
+
+### setRate(...)
+
+```typescript
+setRate(options: { assetId: string; rate: number; }) => Promise<void>
+```
+
+| Param         | Type                                            |
+| ------------- | ----------------------------------------------- |
+| **`options`** | <code>{ assetId: string; rate: number; }</code> |
 
 ---
 
 ### getCurrentTime(...)
 
 ```typescript
-getCurrentTime(options: { assetId: string; }) => any
+getCurrentTime(options: { assetId: string; }) => Promise<{ currentTime: number; }>
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
 
-**Returns:** <code>any</code>
+**Returns:** <code>Promise&lt;{ currentTime: number; }&gt;</code>
 
 ---
 
 ### getDuration(...)
 
 ```typescript
-getDuration(options: { assetId: string; }) => any
+getDuration(options: { assetId: string; }) => Promise<{ duration: number; }>
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
 
-**Returns:** <code>any</code>
+**Returns:** <code>Promise&lt;{ duration: number; }&gt;</code>
 
 ---
 
 ### isPlaying(...)
 
 ```typescript
-isPlaying(options: { assetId: string; }) => any
+isPlaying(options: { assetId: string; }) => Promise<{ isPlaying: boolean; }>
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
 
-**Returns:** <code>any</code>
+**Returns:** <code>Promise&lt;{ isPlaying: boolean; }&gt;</code>
 
 ---
 
