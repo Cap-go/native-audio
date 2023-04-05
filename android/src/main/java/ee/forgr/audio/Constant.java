@@ -13,6 +13,7 @@ public class Constant {
     public static final String OPT_FADE_MUSIC = "fade";
     public static final String OPT_FOCUS_AUDIO = "focus";
     public static final String VOLUME = "volume";
+    public static final String RATE = "rate";
     public static final String AUDIO_CHANNEL_NUM = "audioChannelNum";
     public static final String LOOP = "loop";
 }

@@ -3,9 +3,13 @@ package ee.forgr.audio;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
+import android.media.PlaybackParams;
 import android.os.Build;
 import android.os.SystemClock;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
+
 import java.util.concurrent.Callable;
 
 public class AudioDispatcher
@@ -87,6 +91,13 @@ public class AudioDispatcher
 
     public void setVolume(float volume) throws Exception {
         mediaPlayer.setVolume(volume, volume);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void setRate(float rate) throws Exception {
+        PlaybackParams pp = mediaPlayer.getPlaybackParams();
+        pp.setSpeed(rate);
+        mediaPlayer.setPlaybackParams(pp);
     }
 
     public void loop() throws Exception {
