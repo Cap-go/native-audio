@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.1.0](https://github.com/Cap-go/native-audio/compare/v5.0.16...v5.1.0) (2023-04-06)
+
+### Features
+
+- add set rate ([fb06982](https://github.com/Cap-go/native-audio/commit/fb069827fe6a93e59461de87be4348c5b09b4ba3))
+
 ### [5.0.16](https://github.com/Cap-go/native-audio/compare/v5.0.15...v5.0.16) (2023-04-03)
 
 ### [5.0.15](https://github.com/Cap-go/native-audio/compare/v5.0.14...v5.0.15) (2023-03-27)
