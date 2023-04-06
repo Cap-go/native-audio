@@ -132,6 +132,22 @@ public class AudioAsset {
         }
     }
 
+    /**
+     * Set the playback rate for the player (ignored on API < 23)
+     *
+     * @param volume
+     */
+    public void setRate(float rate) throws Exception {
+
+        for (int x = 0; x < audioList.size(); x++) {
+            AudioDispatcher audio = audioList.get(x);
+
+            if (audio != null) {
+                audio.setRate(rate);
+            }
+        }
+    }
+
     public boolean isPlaying() throws Exception {
         if (audioList.size() != 1) return false;
 

@@ -4,7 +4,6 @@ import android.content.res.AssetFileDescriptor;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.Build;
-import android.os.SystemClock;
 import android.util.Log;
 import java.util.concurrent.Callable;
 
@@ -87,6 +86,13 @@ public class AudioDispatcher
 
     public void setVolume(float volume) throws Exception {
         mediaPlayer.setVolume(volume, volume);
+    }
+
+    public void setRate(float rate) throws Exception {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return;
+        }
+        mediaPlayer.setPlaybackParams(mediaPlayer.getPlaybackParams().setSpeed(rate));
     }
 
     public void loop() throws Exception {

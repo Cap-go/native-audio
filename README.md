@@ -335,6 +335,20 @@ setVolume(options: { assetId: string; volume: number; }) => any
 
 ---
 
+### setRate(...)
+
+```typescript
+setRate(options: { assetId: string; rate: number; }) => any
+```
+
+| Param         | Type                                            |
+| ------------- | ----------------------------------------------- |
+| **`options`** | <code>{ assetId: string; rate: number; }</code> |
+
+**Returns:** <code>any</code>
+
+---
+
 ### getCurrentTime(...)
 
 ```typescript

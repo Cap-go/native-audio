@@ -182,6 +182,16 @@ public class NativeAudio: CAPPlugin {
         call.resolve()
     }
 
+    @objc func setRate(_ call: CAPPluginCall) {
+        guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
+            return
+        }
+
+        let rate = call.getFloat(Constant.Rate) ?? 1.0
+        audioAsset.setRate(rate: rate as NSNumber)
+        call.resolve()
+    }
+
     @objc func isPlaying(_ call: CAPPluginCall) {
         guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
             return

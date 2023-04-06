@@ -160,6 +160,13 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
         }
     }
 
+    func setRate(rate: NSNumber!) {
+        for i in 0..<channels.count {
+            let player: AVAudioPlayer! = channels.object(at: i) as? AVAudioPlayer
+            player.rate = rate.floatValue
+        }
+    }
+
     public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         NSLog("playerDidFinish")
         self.owner.notifyListeners("complete", data: [

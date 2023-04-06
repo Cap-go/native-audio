@@ -104,6 +104,15 @@ export class NativeAudioWeb extends WebPlugin implements NativeAudio {
     audio.volume = options.volume;
   }
 
+  async setRate(options: { assetId: string; rate: number }): Promise<void> {
+    if (typeof options?.rate !== 'number') {
+      throw 'no rate provided';
+    }
+
+    const audio: HTMLAudioElement = this.getAudioAsset(options.assetId).audio;
+    audio.playbackRate = options.rate;
+  }
+
   async isPlaying(options: { assetId: string }): Promise<{ isPlaying: boolean }> {
     const audio: HTMLAudioElement = this.getAudioAsset(options.assetId).audio;
     return { isPlaying: !audio.paused };

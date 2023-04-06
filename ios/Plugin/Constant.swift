@@ -12,6 +12,7 @@ public class Constant {
     public static let AssetPathKey = "assetPath"
     public static let AssetIdKey = "assetId"
     public static let Volume = "volume"
+    public static let Rate = "rate"
     public static let Loop = "loop"
 
     public static let ErrorAssetId = "Asset Id is missing"
