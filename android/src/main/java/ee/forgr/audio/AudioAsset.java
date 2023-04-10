@@ -138,6 +138,8 @@ public class AudioAsset {
 
             if (audio != null) {
                 audio.setVolume(volume);
+            } else {
+                throw new Exception("AudioDispatcher is null");
             }
         }
     }
