@@ -12,7 +12,6 @@ import static ee.forgr.audio.Constant.LOOP;
 import static ee.forgr.audio.Constant.OPT_FADE_MUSIC;
 import static ee.forgr.audio.Constant.OPT_FOCUS_AUDIO;
 import static ee.forgr.audio.Constant.VOLUME;
-import static ee.forgr.audio.Constant.RATE;
 
 import android.Manifest;
 import android.content.Context;
@@ -225,6 +224,9 @@ public class NativeAudio extends Plugin implements AudioManager.OnAudioFocusChan
                     if (wasPlaying) {
                         resumeList.add(asset);
                     }
+                    call.resolve();
+                } else {
+                    call.reject(ERROR_ASSET_NOT_LOADED + " - " + audioId);
                 }
             } else {
                 call.reject(ERROR_ASSET_NOT_LOADED + " - " + audioId);
@@ -245,6 +247,9 @@ public class NativeAudio extends Plugin implements AudioManager.OnAudioFocusChan
                 if (asset != null) {
                     asset.resume();
                     resumeList.add(asset);
+                    call.resolve();
+                } else {
+                    call.reject(ERROR_ASSET_NOT_LOADED + " - " + audioId);
                 }
             } else {
                 call.reject(ERROR_ASSET_NOT_LOADED + " - " + audioId);
@@ -264,6 +269,9 @@ public class NativeAudio extends Plugin implements AudioManager.OnAudioFocusChan
                 AudioAsset asset = audioAssetList.get(audioId);
                 if (asset != null) {
                     asset.stop();
+                    call.resolve();
+                } else {
+                    call.reject(ERROR_ASSET_NOT_LOADED + " - " + audioId);
                 }
             } else {
                 call.reject(ERROR_ASSET_NOT_LOADED + " - " + audioId);
@@ -288,7 +296,6 @@ public class NativeAudio extends Plugin implements AudioManager.OnAudioFocusChan
                     if (asset != null) {
                         asset.unload();
                         audioAssetList.remove(audioId);
-
                         status = new JSObject();
                         status.put("status", "OK");
                         call.resolve(status);
@@ -324,27 +331,9 @@ public class NativeAudio extends Plugin implements AudioManager.OnAudioFocusChan
                 AudioAsset asset = audioAssetList.get(audioId);
                 if (asset != null) {
                     asset.setVolume(volume);
-                }
-            } else {
-                call.reject(ERROR_AUDIO_ASSET_MISSING);
-            }
-        } catch (Exception ex) {
-            call.reject(ex.getMessage());
-        }
-    }
-
-    @PluginMethod
-    public void setRate(PluginCall call) {
-        try {
-            initSoundPool();
-
-            String audioId = call.getString(ASSET_ID);
-            float rate = call.getFloat(RATE);
-
-            if (audioAssetList.containsKey(audioId)) {
-                AudioAsset asset = audioAssetList.get(audioId);
-                if (asset != null) {
-                    asset.setRate(rate);
+                    call.resolve();
+                } else {
+                    call.reject(ERROR_AUDIO_ASSET_MISSING);
                 }
             } else {
                 call.reject(ERROR_AUDIO_ASSET_MISSING);
@@ -370,6 +359,8 @@ public class NativeAudio extends Plugin implements AudioManager.OnAudioFocusChan
                 AudioAsset asset = audioAssetList.get(audioId);
                 if (asset != null) {
                     call.resolve(new JSObject().put("isPlaying", asset.isPlaying()));
+                } else {
+                    call.reject(ERROR_AUDIO_ASSET_MISSING + " - " + audioId);
                 }
             } else {
                 call.reject(ERROR_AUDIO_ASSET_MISSING + " - " + audioId);
@@ -470,7 +461,6 @@ public class NativeAudio extends Plugin implements AudioManager.OnAudioFocusChan
                             @Override
                             public Void call() throws Exception {
                                 call.resolve(new JSObject().put(ASSET_ID, audioId));
-
                                 return null;
                             }
                         }
