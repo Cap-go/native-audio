@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.1](https://github.com/Cap-go/native-audio/compare/v5.1.0...v5.1.1) (2023-04-10)
+
+### Bug Fixes
+
+- add missing resolve in android ([14e70c1](https://github.com/Cap-go/native-audio/commit/14e70c1f377a90b428e5d73c882c9e0eda633517))
+
 ## [5.1.0](https://github.com/Cap-go/native-audio/compare/v5.0.16...v5.1.0) (2023-04-06)
 
 ### Features
