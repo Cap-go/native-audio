@@ -42,6 +42,8 @@ public class AudioAsset {
             audio.play(time, callback);
             playIndex++;
             playIndex = playIndex % audioList.size();
+        } else {
+            throw new Exception("AudioDispatcher is null");
         }
     }
 
@@ -84,6 +86,8 @@ public class AudioAsset {
 
             if (audio != null) {
                 audio.resume();
+            } else {
+                throw new Exception("AudioDispatcher is null");
             }
         }
     }
@@ -94,6 +98,8 @@ public class AudioAsset {
 
             if (audio != null) {
                 audio.stop();
+            } else {
+                throw new Exception("AudioDispatcher is null");
             }
         }
     }
@@ -105,6 +111,8 @@ public class AudioAsset {
             audio.loop();
             playIndex++;
             playIndex = playIndex % audioList.size();
+        } else {
+            throw new Exception("AudioDispatcher is null");
         }
     }
 
@@ -116,6 +124,8 @@ public class AudioAsset {
 
             if (audio != null) {
                 audio.unload();
+            } else {
+                throw new Exception("AudioDispatcher is null");
             }
         }
 
@@ -128,22 +138,6 @@ public class AudioAsset {
 
             if (audio != null) {
                 audio.setVolume(volume);
-            }
-        }
-    }
-
-    /**
-     * Set the playback rate for the player (ignored on API < 23)
-     *
-     * @param volume
-     */
-    public void setRate(float rate) throws Exception {
-
-        for (int x = 0; x < audioList.size(); x++) {
-            AudioDispatcher audio = audioList.get(x);
-
-            if (audio != null) {
-                audio.setRate(rate);
             }
         }
     }
