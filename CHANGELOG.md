@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.4](https://github.com/Cap-go/native-audio/compare/v5.1.3...v5.1.4) (2023-04-10)
+
+### Bug Fixes
+
+- call resolve for play method ([e809038](https://github.com/Cap-go/native-audio/commit/e8090381f466c9f0416e634ec1ce582c49f5f971))
+- return promise android ([35f7e7a](https://github.com/Cap-go/native-audio/commit/35f7e7a2c406d49370f9f7ee0263bb488d4d3c8c))
+
 ### [5.1.3](https://github.com/Cap-go/native-audio/compare/v5.1.2...v5.1.3) (2023-04-10)
 
 ### Bug Fixes
