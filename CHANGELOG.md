@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.2](https://github.com/Cap-go/native-audio/compare/v5.1.1...v5.1.2) (2023-04-10)
+
+### Bug Fixes
+
+- add Exception android if asset fail ([10111bd](https://github.com/Cap-go/native-audio/commit/10111bd68a1a430857f46cf92af6c01a6226db3c))
+
 ### [5.1.1](https://github.com/Cap-go/native-audio/compare/v5.1.0...v5.1.1) (2023-04-10)
 
 ### Bug Fixes
