@@ -35,11 +35,11 @@ public class AudioAsset {
         this.owner.dispatchComplete(this.assetId);
     }
 
-    public void play(Double time, Callable<Void> callback) throws Exception {
+    public void play(Double time) throws Exception {
         AudioDispatcher audio = audioList.get(playIndex);
 
         if (audio != null) {
-            audio.play(time, callback);
+            audio.play(time);
             playIndex++;
             playIndex = playIndex % audioList.size();
         } else {

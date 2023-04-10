@@ -58,7 +58,7 @@ public class AudioDispatcher
         return mediaPlayer.getCurrentPosition() / 1000.0;
     }
 
-    public void play(Double time, Callable<Void> callable) throws Exception {
+    public void play(Double time) throws Exception {
         invokePlay(time, false);
     }
 

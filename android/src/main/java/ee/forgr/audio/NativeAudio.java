@@ -455,19 +455,13 @@ public class NativeAudio extends Plugin implements AudioManager.OnAudioFocusChan
                     asset.loop();
                     call.resolve();
                 } else if (asset != null) {
-                    asset.play(
-                        time,
-                        new Callable<Void>() {
-                            @Override
-                            public Void call() throws Exception {
-                                call.resolve(new JSObject().put(ASSET_ID, audioId));
-                                return null;
-                            }
-                        }
-                    );
+                    asset.play(time);
+                    call.resolve();
                 } else {
                     call.reject("Error with asset");
                 }
+            } else {
+                call.reject("Error with asset");
             }
         } catch (Exception ex) {
             call.reject(ex.getMessage());
