@@ -24,7 +24,7 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
 
         self.owner = owner
         self.assetId = assetId
-        self.channels = NSMutableArray.init(capacity: channels as Int)
+        self.channels = NSMutableArray.init(capacity: channels.intValue)
 
         super.init()
 
@@ -53,7 +53,7 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
             return 0
         }
 
-        let player: AVAudioPlayer = channels.object(at: playIndex) as AVAudioPlayer
+        let player: AVAudioPlayer = channels.object(at: playIndex) as! AVAudioPlayer
 
         return player.currentTime
     }
@@ -63,13 +63,13 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
             return 0
         }
 
-        let player: AVAudioPlayer = channels.object(at: playIndex) as AVAudioPlayer
+        let player: AVAudioPlayer = channels.object(at: playIndex) as! AVAudioPlayer
 
         return player.duration
     }
 
     func play(time: TimeInterval) {
-        let player: AVAudioPlayer = channels.object(at: playIndex) as AVAudioPlayer
+        let player: AVAudioPlayer = channels.object(at: playIndex) as! AVAudioPlayer
         player.currentTime = time
         player.numberOfLoops = 0
         player.play()
@@ -96,12 +96,12 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
     }
 
     func pause() {
-        let player: AVAudioPlayer = channels.object(at: playIndex) as AVAudioPlayer
+        let player: AVAudioPlayer = channels.object(at: playIndex) as! AVAudioPlayer
         player.pause()
     }
 
     func resume() {
-        let player: AVAudioPlayer = channels.object(at: playIndex) as AVAudioPlayer
+        let player: AVAudioPlayer = channels.object(at: playIndex) as! AVAudioPlayer
 
         let timeOffset = player.deviceCurrentTime + 0.01
         player.play(atTime: timeOffset)
@@ -183,7 +183,7 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
             return false
         }
 
-        let player: AVAudioPlayer = channels.object(at: playIndex) as AVAudioPlayer
+        let player: AVAudioPlayer = channels.object(at: playIndex) as! AVAudioPlayer
 
         return player.isPlaying
     }
