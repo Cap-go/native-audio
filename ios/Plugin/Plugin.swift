@@ -163,7 +163,7 @@ public class NativeAudio: CAPPlugin {
         if self.audioList.count > 0 {
             let asset = self.audioList[audioId]
             if asset != nil && asset is AudioAsset {
-                let audioAsset = asset as! AudioAsset
+                let audioAsset = asset as AudioAsset
                 audioAsset.unload()
                 self.audioList[audioId] = nil
             }
@@ -236,7 +236,7 @@ public class NativeAudio: CAPPlugin {
                     var basePath: String?
                     if isUrl == false {
                         // if assetPath dont start with public/ add it
-                        assetPath = assetPath.starts(with: "public/") ? assetPath : "public/" + assetPath 
+                        assetPath = assetPath.starts(with: "public/") ? assetPath : "public/" + assetPath
 
                         let assetPathSplit = assetPath.components(separatedBy: ".")
                         basePath = Bundle.main.path(forResource: assetPathSplit[0], ofType: assetPathSplit[1])
@@ -248,13 +248,14 @@ public class NativeAudio: CAPPlugin {
                     if FileManager.default.fileExists(atPath: basePath ?? "") {
                         if !complex {
                             let pathUrl = URL(fileURLWithPath: basePath ?? "")
-                            let soundFileUrl: CFURL = CFBridgingRetain(pathUrl) as! CFURL
+                            let soundFileUrl: CFURL = CFBridgingRetain(pathUrl) as CFURL
                             var soundId = SystemSoundID()
                             AudioServicesCreateSystemSoundID(soundFileUrl, &soundId)
                             self.audioList[audioId] = NSNumber(value: Int32(soundId))
                             call.resolve()
                         } else {
-                            let audioAsset: AudioAsset = AudioAsset(owner: self, withAssetId: audioId, withPath: basePath, withChannels: channels, withVolume: volume as NSNumber?, withFadeDelay: delay)
+                            let audioAsset: AudioAsset = AudioAsset(owner: self, 
+                                withAssetId: audioId, withPath: basePath, withChannels: channels, withVolume: volume as NSNumber?, withFadeDelay: delay)
                             self.audioList[audioId] = audioAsset
                             call.resolve()
                         }
