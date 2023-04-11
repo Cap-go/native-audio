@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.8](https://github.com/Cap-go/native-audio/compare/v5.1.7...v5.1.8) (2023-04-11)
+
+### Bug Fixes
+
+- eslint ([4c58118](https://github.com/Cap-go/native-audio/commit/4c581181c3402270f9cbfc78a53fc1fec0bec38e))
+
 ### [5.1.7](https://github.com/Cap-go/native-audio/compare/v5.1.6...v5.1.7) (2023-04-11)
 
 ### Bug Fixes
