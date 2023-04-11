@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.7](https://github.com/Cap-go/native-audio/compare/v5.1.6...v5.1.7) (2023-04-11)
+
+### Bug Fixes
+
+- lint ([985122c](https://github.com/Cap-go/native-audio/commit/985122cc690b1f119a1cf46bfb5ccf2711ce0cbc))
+- old code is more modern swift ([00a16e3](https://github.com/Cap-go/native-audio/commit/00a16e3a74db58dd2e108e1d4c29ce5ec760abd4))
+
 ### [5.1.6](https://github.com/Cap-go/native-audio/compare/v5.1.5...v5.1.6) (2023-04-10)
 
 ### Bug Fixes
