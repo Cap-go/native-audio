@@ -10,40 +10,39 @@ import AVFoundation
 
 public class AudioAsset: NSObject, AVAudioPlayerDelegate {
 
-    var channels: NSMutableArray = NSMutableArray()
+    var channels: [AVAudioPlayer] = []
     var playIndex: Int = 0
     var assetId: String = ""
-    var initialVolume: NSNumber = 1.0
-    var fadeDelay: NSNumber = 1.0
+    var initialVolume: Float = 1.0
+    var fadeDelay: Float = 1.0
     var owner: NativeAudio
 
     let FADESTEP: Float = 0.05
     let FADEDELAY: Float = 0.08
 
-    init(owner: NativeAudio, withAssetId assetId: String, withPath path: String!, withChannels channels: NSNumber!, withVolume volume: NSNumber!, withFadeDelay delay: NSNumber!) {
+    init(owner: NativeAudio, withAssetId assetId: String, withPath path: String!, withChannels channels: Int!, withVolume volume: Float!, withFadeDelay delay: Float!) {
 
         self.owner = owner
         self.assetId = assetId
-        self.channels = NSMutableArray.init(capacity: channels.intValue)
+        self.channels = []
 
         super.init()
 
-        let pathUrl: NSURL! = NSURL.fileURL(withPath: path) as NSURL
-
-        for _ in 0..<channels.intValue {
+        let pathUrl: URL = URL(string: path)!
+        for _ in 0..<channels {
             do {
-                let player: AVAudioPlayer! = try AVAudioPlayer(contentsOf: pathUrl as URL)
+                let player: AVAudioPlayer! = try AVAudioPlayer(contentsOf: pathUrl)
 
                 if player != nil {
-                    player.volume = volume.floatValue
+                    player.volume = volume
                     player.prepareToPlay()
-                    self.channels.addObjects(from: [player as Any])
+                    self.channels.append(player)
                     if channels == 1 {
                         player.delegate = self
                     }
                 }
             } catch {
-
+                print("Error loading \(String(describing: path))")
             }
         }
     }
@@ -52,8 +51,7 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
         if channels.count != 1 {
             return 0
         }
-
-        let player: AVAudioPlayer = channels.object(at: playIndex) as! AVAudioPlayer
+        let player: AVAudioPlayer = channels[playIndex]
 
         return player.currentTime
     }
@@ -63,32 +61,32 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
             return 0
         }
 
-        let player: AVAudioPlayer = channels.object(at: playIndex) as! AVAudioPlayer
+        let player: AVAudioPlayer = channels[playIndex]
 
         return player.duration
     }
 
     func play(time: TimeInterval) {
-        let player: AVAudioPlayer = channels.object(at: playIndex) as! AVAudioPlayer
+        let player: AVAudioPlayer = channels[playIndex]
         player.currentTime = time
         player.numberOfLoops = 0
         player.play()
-        playIndex = Int(truncating: NSNumber(value: playIndex + 1))
-        playIndex = Int(truncating: NSNumber(value: playIndex % channels.count))
+        playIndex += 1
+        playIndex = playIndex % channels.count
     }
 
     func playWithFade(time: TimeInterval) {
-        let player: AVAudioPlayer! = channels.object(at: playIndex) as? AVAudioPlayer
+        let player: AVAudioPlayer = channels[playIndex]
         player.currentTime = time
 
         if !player.isPlaying {
             player.numberOfLoops = 0
             player.volume = 0
             player.play()
-            playIndex = Int(truncating: NSNumber(value: playIndex + 1))
-            playIndex = Int(truncating: NSNumber(value: playIndex % channels.count))
+            playIndex += 1
+            playIndex = playIndex % channels.count
         } else {
-            if player.volume < initialVolume.floatValue {
+            if player.volume < initialVolume {
                 player.volume += self.FADESTEP
             }
         }
@@ -96,36 +94,35 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
     }
 
     func pause() {
-        let player: AVAudioPlayer = channels.object(at: playIndex) as! AVAudioPlayer
+        let player: AVAudioPlayer = channels[playIndex]
         player.pause()
     }
 
     func resume() {
-        let player: AVAudioPlayer = channels.object(at: playIndex) as! AVAudioPlayer
+        let player: AVAudioPlayer = channels[playIndex]
 
         let timeOffset = player.deviceCurrentTime + 0.01
         player.play(atTime: timeOffset)
     }
 
     func stop() {
-        for aud in 0..<channels.count {
-            let player: AVAudioPlayer! = channels.object(at: aud) as? AVAudioPlayer
+        for player in channels {
             player.stop()
         }
     }
 
     func stopWithFade() {
-        let player: AVAudioPlayer! = channels.object(at: playIndex) as? AVAudioPlayer
+        let player: AVAudioPlayer = channels[playIndex]
 
         if !player.isPlaying {
             player.currentTime = 0.0
             player.numberOfLoops = 0
             player.volume = 0
             player.play()
-            playIndex = Int(truncating: NSNumber(value: playIndex + 1))
-            playIndex = Int(truncating: NSNumber(value: playIndex % channels.count))
+            playIndex += 1
+            playIndex = playIndex % channels.count
         } else {
-            if player.volume < initialVolume.floatValue {
+            if player.volume < initialVolume {
                 player.volume += self.FADESTEP
             }
         }
@@ -134,11 +131,11 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
     func loop() {
         self.stop()
 
-        let player: AVAudioPlayer! = channels.object(at: Int(playIndex)) as? AVAudioPlayer
+        let player: AVAudioPlayer = channels[playIndex]
         player.numberOfLoops = -1
         player.play()
-        playIndex = Int(truncating: NSNumber(value: playIndex + 1))
-        playIndex = Int(truncating: NSNumber(value: playIndex % channels.count))
+        playIndex += 1
+        playIndex = playIndex % channels.count
     }
 
     func unload() {
@@ -149,20 +146,17 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
         //
         //            player = nil
         //        }
-
-        channels = NSMutableArray()
+        channels = []
     }
 
     func setVolume(volume: NSNumber!) {
-        for aud in 0..<channels.count {
-            let player: AVAudioPlayer! = channels.object(at: aud) as? AVAudioPlayer
+        for player in channels {
             player.volume = volume.floatValue
         }
     }
 
     func setRate(rate: NSNumber!) {
-        for aud in 0..<channels.count {
-            let player: AVAudioPlayer! = channels.object(at: aud) as? AVAudioPlayer
+        for player in channels {
             player.rate = rate.floatValue
         }
     }
@@ -183,8 +177,7 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
             return false
         }
 
-        let player: AVAudioPlayer = channels.object(at: playIndex) as! AVAudioPlayer
-
+        let player: AVAudioPlayer = channels[playIndex]
         return player.isPlaying
     }
 }

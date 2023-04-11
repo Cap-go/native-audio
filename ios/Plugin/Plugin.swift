@@ -163,7 +163,10 @@ public class NativeAudio: CAPPlugin {
         if self.audioList.count > 0 {
             let asset = self.audioList[audioId]
             if asset != nil && asset is AudioAsset {
-                let audioAsset = asset as! AudioAsset
+                guard let audioAsset=asset as? AudioAsset else {
+                    call.reject("Cannot cast to AudioAsset")
+                    return
+                }
                 audioAsset.unload()
                 self.audioList[audioId] = nil
             }
@@ -204,9 +207,9 @@ public class NativeAudio: CAPPlugin {
 
     private func preloadAsset(_ call: CAPPluginCall, isComplex complex: Bool) {
         let audioId = call.getString(Constant.AssetIdKey) ?? ""
-        let channels: NSNumber?
+        let channels: Int?
         let volume: Float?
-        let delay: NSNumber?
+        let delay: Float?
         let isUrl: Bool?
 
         if audioId != "" {
@@ -214,8 +217,8 @@ public class NativeAudio: CAPPlugin {
 
             if complex {
                 volume = call.getFloat("volume") ?? 1.0
-                channels = NSNumber(value: call.getInt("channels") ?? 1)
-                delay = NSNumber(value: call.getInt("delay") ?? 1)
+                channels = call.getInt("channels") ?? 1
+                delay = call.getFloat("delay") ?? 1.0
                 isUrl = call.getBool("isUrl") ?? false
             } else {
                 channels = 0
@@ -230,7 +233,6 @@ public class NativeAudio: CAPPlugin {
 
             let asset = audioList[audioId]
             let queue = DispatchQueue(label: "ee.forgr.audio.simple.queue", qos: .userInitiated)
-
             queue.async {
                 if asset == nil {
                     var basePath: String?
@@ -247,21 +249,22 @@ public class NativeAudio: CAPPlugin {
 
                     if FileManager.default.fileExists(atPath: basePath ?? "") {
                         if !complex {
-                            let pathUrl = URL(fileURLWithPath: basePath ?? "")
-                            let soundFileUrl: CFURL = CFBridgingRetain(pathUrl) as! CFURL
+                            let soundFileUrl = URL(fileURLWithPath: basePath ?? "")
                             var soundId = SystemSoundID()
-                            AudioServicesCreateSystemSoundID(soundFileUrl, &soundId)
+                            AudioServicesCreateSystemSoundID(soundFileUrl as CFURL, &soundId)
                             self.audioList[audioId] = NSNumber(value: Int32(soundId))
                             call.resolve()
                         } else {
                             let audioAsset: AudioAsset = AudioAsset(owner: self,
-                                                                    withAssetId: audioId, withPath: basePath, withChannels: channels, withVolume: volume as NSNumber?, withFadeDelay: delay)
+                                                                    withAssetId: audioId, withPath: basePath, withChannels: channels, withVolume: volume, withFadeDelay: delay)
                             self.audioList[audioId] = audioAsset
                             call.resolve()
                         }
                     } else {
                         call.reject(Constant.ErrorAssetPath + " - " + assetPath)
                     }
+                } else {
+                    call.reject(Constant.ErrorAssetAlreadyLoaded + " - " + audioId)
                 }
             }
         }
