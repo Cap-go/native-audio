@@ -1,10 +1,10 @@
-import { registerPlugin } from '@capacitor/core';
+import { registerPlugin } from "@capacitor/core";
 
-import { NativeAudio } from './definitions';
+import { NativeAudio } from "./definitions";
 
-const NativeAudio = registerPlugin<NativeAudio>('NativeAudio', {
-  web: () => import('./web').then((m) => new m.NativeAudioWeb()),
+const NativeAudio = registerPlugin<NativeAudio>("NativeAudio", {
+  web: () => import("./web").then((m) => new m.NativeAudioWeb()),
 });
 
-export * from './definitions';
+export * from "./definitions";
 export { NativeAudio };

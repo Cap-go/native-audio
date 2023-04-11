@@ -9,7 +9,9 @@ export interface NativeAudio {
   unload(options: { assetId: string }): Promise<void>;
   setVolume(options: { assetId: string; volume: number }): Promise<void>;
   setRate(options: { assetId: string; rate: number }): Promise<void>;
-  getCurrentTime(options: { assetId: string }): Promise<{ currentTime: number }>;
+  getCurrentTime(options: {
+    assetId: string;
+  }): Promise<{ currentTime: number }>;
   getDuration(options: { assetId: string }): Promise<{ duration: number }>;
   isPlaying(options: { assetId: string }): Promise<{ isPlaying: boolean }>;
 }

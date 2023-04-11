@@ -1,4 +1,4 @@
-import { NativeAudio } from './web';
+import { NativeAudio } from "./web";
 
 export class Test {
   /**
@@ -7,27 +7,43 @@ export class Test {
    */
   public start(assetId: string, assetPath: string): void {
     this.runLater(
-      new TestCase('preload', () => NativeAudio.preload({ assetId: assetId, assetPath: assetPath })),
-      new TestCase('duration:', async () =>
-        console.log(JSON.stringify(await NativeAudio.getDuration({ assetId: assetId })))
+      new TestCase("preload", () =>
+        NativeAudio.preload({ assetId: assetId, assetPath: assetPath })
       ),
-      new TestCase('currentTime:', async () =>
-        console.log(JSON.stringify(await NativeAudio.getCurrentTime({ assetId: assetId })))
+      new TestCase("duration:", async () =>
+        console.log(
+          JSON.stringify(await NativeAudio.getDuration({ assetId: assetId }))
+        )
       ),
-      new TestCase('play (0)', () => NativeAudio.play({ assetId: assetId, time: 0 })),
-      new TestCase('pause', () => NativeAudio.pause({ assetId: assetId })),
-      new TestCase('resume', () => NativeAudio.resume({ assetId: assetId })),
-      new TestCase('pause', () => NativeAudio.pause({ assetId: assetId })),
-      new TestCase('currentTime:', async () =>
-        console.log(JSON.stringify(await NativeAudio.getCurrentTime({ assetId: assetId })))
+      new TestCase("currentTime:", async () =>
+        console.log(
+          JSON.stringify(await NativeAudio.getCurrentTime({ assetId: assetId }))
+        )
       ),
-      new TestCase('play (0)', () => NativeAudio.play({ assetId: assetId, time: 0 })),
-      new TestCase('play (10)', () => NativeAudio.play({ assetId: assetId, time: 10 })),
-      new TestCase('stop', () => NativeAudio.stop({ assetId: assetId })),
-      new TestCase('loop', () => NativeAudio.loop({ assetId: assetId })),
-      new TestCase('setVolume', () => NativeAudio.setVolume({ assetId: assetId, volume: 0.5 })),
-      new TestCase('unload', () => NativeAudio.unload({ assetId: assetId })),
-      new TestCase('-- FINISH --', () => undefined)
+      new TestCase("play (0)", () =>
+        NativeAudio.play({ assetId: assetId, time: 0 })
+      ),
+      new TestCase("pause", () => NativeAudio.pause({ assetId: assetId })),
+      new TestCase("resume", () => NativeAudio.resume({ assetId: assetId })),
+      new TestCase("pause", () => NativeAudio.pause({ assetId: assetId })),
+      new TestCase("currentTime:", async () =>
+        console.log(
+          JSON.stringify(await NativeAudio.getCurrentTime({ assetId: assetId }))
+        )
+      ),
+      new TestCase("play (0)", () =>
+        NativeAudio.play({ assetId: assetId, time: 0 })
+      ),
+      new TestCase("play (10)", () =>
+        NativeAudio.play({ assetId: assetId, time: 10 })
+      ),
+      new TestCase("stop", () => NativeAudio.stop({ assetId: assetId })),
+      new TestCase("loop", () => NativeAudio.loop({ assetId: assetId })),
+      new TestCase("setVolume", () =>
+        NativeAudio.setVolume({ assetId: assetId, volume: 0.5 })
+      ),
+      new TestCase("unload", () => NativeAudio.unload({ assetId: assetId })),
+      new TestCase("-- FINISH --", () => undefined)
     );
   }
 
@@ -43,5 +59,8 @@ export class Test {
 }
 
 class TestCase {
-  constructor(public readonly fncName: string, public readonly fnc: () => void | Promise<void>) {}
+  constructor(
+    public readonly fncName: string,
+    public readonly fnc: () => void | Promise<void>
+  ) {}
 }
