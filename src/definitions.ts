@@ -1,3 +1,15 @@
+import type { PluginListenerHandle } from "@capacitor/core";
+
+export interface CompletedEvent {
+  /**
+   * Emit when a play completes
+   *
+   * @since  5.0.0
+   */
+  assetId: string;
+}
+export type CompletedListener = (state: CompletedEvent) => void;
+
 export interface NativeAudio {
   configure(options: ConfigureOptions): Promise<void>;
   preload(options: PreloadOptions): Promise<void>;
@@ -14,6 +26,15 @@ export interface NativeAudio {
   }): Promise<{ currentTime: number }>;
   getDuration(options: { assetId: string }): Promise<{ duration: number }>;
   isPlaying(options: { assetId: string }): Promise<{ isPlaying: boolean }>;
+  /**
+   * Listen for complete event
+   *
+   * @since 5.0.0
+   */
+  addListener(
+    eventName: "complete",
+    listenerFunc: CompletedListener
+  ): Promise<PluginListenerHandle> & PluginListenerHandle;
 }
 
 export interface ConfigureOptions {
