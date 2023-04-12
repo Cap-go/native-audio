@@ -2,9 +2,7 @@ package ee.forgr.audio;
 
 import android.content.res.AssetFileDescriptor;
 import android.os.Build;
-
 import androidx.annotation.RequiresApi;
-
 import com.getcapacitor.JSObject;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
@@ -158,12 +156,12 @@ public class AudioAsset {
 
   @RequiresApi(api = Build.VERSION_CODES.M)
   public void setRate(float rate) throws Exception {
-      for (int x = 0; x < audioList.size(); x++) {
-          AudioDispatcher audio = audioList.get(x);
-          if (audio != null) {
-              audio.setRate(rate);
-          }
+    for (int x = 0; x < audioList.size(); x++) {
+      AudioDispatcher audio = audioList.get(x);
+      if (audio != null) {
+        audio.setRate(rate);
       }
+    }
   }
 
   public boolean isPlaying() throws Exception {

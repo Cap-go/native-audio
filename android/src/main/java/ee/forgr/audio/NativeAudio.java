@@ -11,8 +11,8 @@ import static ee.forgr.audio.Constant.ERROR_AUDIO_ID_MISSING;
 import static ee.forgr.audio.Constant.LOOP;
 import static ee.forgr.audio.Constant.OPT_FADE_MUSIC;
 import static ee.forgr.audio.Constant.OPT_FOCUS_AUDIO;
-import static ee.forgr.audio.Constant.VOLUME;
 import static ee.forgr.audio.Constant.RATE;
+import static ee.forgr.audio.Constant.VOLUME;
 
 import android.Manifest;
 import android.content.Context;
@@ -22,9 +22,7 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
-
 import androidx.annotation.RequiresApi;
-
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
@@ -368,28 +366,27 @@ public class NativeAudio
     }
   }
 
+  @RequiresApi(api = Build.VERSION_CODES.M)
+  @PluginMethod
+  public void setRate(PluginCall call) {
+    try {
+      initSoundPool();
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    @PluginMethod
-    public void setRate(PluginCall call) {
-        try {
-            initSoundPool();
+      String audioId = call.getString(ASSET_ID);
+      float rate = call.getFloat(RATE);
 
-            String audioId = call.getString(ASSET_ID);
-            float rate = call.getFloat(RATE);
-
-            if (audioAssetList.containsKey(audioId)) {
-                AudioAsset asset = audioAssetList.get(audioId);
-                if (asset != null) {
-                    asset.setRate(rate);
-                }
-            } else {
-                call.reject(ERROR_AUDIO_ASSET_MISSING);
-            }
-        } catch (Exception ex) {
-            call.reject(ex.getMessage());
+      if (audioAssetList.containsKey(audioId)) {
+        AudioAsset asset = audioAssetList.get(audioId);
+        if (asset != null) {
+          asset.setRate(rate);
         }
+      } else {
+        call.reject(ERROR_AUDIO_ASSET_MISSING);
+      }
+    } catch (Exception ex) {
+      call.reject(ex.getMessage());
     }
+  }
 
   @PluginMethod
   public void isPlaying(final PluginCall call) {
