@@ -10,10 +10,7 @@ export class NativeAudioWeb extends WebPlugin implements NativeAudio {
     new Map<string, AudioAsset>();
 
   constructor() {
-    super({
-      name: "NativeAudio",
-      platforms: ["web"],
-    });
+    super();
   }
 
   async resume(options: { assetId: string }): Promise<void> {
