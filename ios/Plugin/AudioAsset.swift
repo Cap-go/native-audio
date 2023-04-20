@@ -28,7 +28,7 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
 
         super.init()
 
-        let pathUrl: URL = URL(string: path)!
+        let pathUrl: URL = URL(string: path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
         for _ in 0..<channels {
             do {
                 let player: AVAudioPlayer! = try AVAudioPlayer(contentsOf: pathUrl)
