@@ -15,6 +15,7 @@ import static ee.forgr.audio.Constant.RATE;
 import static ee.forgr.audio.Constant.VOLUME;
 
 import android.Manifest;
+import android.app.Application;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
@@ -22,7 +23,6 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
-import androidx.annotation.RequiresApi;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
@@ -33,7 +33,6 @@ import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.Callable;
 
 @CapacitorPlugin(
   permissions = {
@@ -58,7 +57,7 @@ public class NativeAudio
     super.load();
 
     this.audioManager =
-      (AudioManager) getBridge()
+      (AudioManager) this
         .getActivity()
         .getSystemService(Context.AUDIO_SERVICE);
   }
@@ -155,7 +154,7 @@ public class NativeAudio
 
   @PluginMethod
   public void play(final PluginCall call) {
-    getBridge()
+    this
       .getActivity()
       .runOnUiThread(
         new Runnable() {
@@ -221,8 +220,7 @@ public class NativeAudio
 
   @PluginMethod
   public void loop(final PluginCall call) {
-    getBridge()
-      .getActivity()
+    this.getActivity()
       .runOnUiThread(
         new Runnable() {
           @Override
@@ -366,7 +364,6 @@ public class NativeAudio
     }
   }
 
-  @RequiresApi(api = Build.VERSION_CODES.M)
   @PluginMethod
   public void setRate(PluginCall call) {
     try {
@@ -377,7 +374,7 @@ public class NativeAudio
 
       if (audioAssetList.containsKey(audioId)) {
         AudioAsset asset = audioAssetList.get(audioId);
-        if (asset != null) {
+        if (asset != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
           asset.setRate(rate);
         }
       } else {
@@ -474,7 +471,7 @@ public class NativeAudio
           if (!fullPath.startsWith("public/")) {
             fullPath = "public/".concat(fullPath);
           }
-          Context ctx = getBridge().getActivity().getApplicationContext();
+          Context ctx = (Application) this.getContext().getApplicationContext();
           AssetManager am = ctx.getResources().getAssets();
           assetFileDescriptor = am.openFd(fullPath);
         }

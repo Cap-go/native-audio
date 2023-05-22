@@ -212,182 +212,181 @@ NativeAudio.isPlaying({
 ### configure(...)
 
 ```typescript
-configure(options: ConfigureOptions) => any
+configure(options: ConfigureOptions) => Promise<void>
 ```
 
 | Param         | Type                                                          |
 | ------------- | ------------------------------------------------------------- |
 | **`options`** | <code><a href="#configureoptions">ConfigureOptions</a></code> |
 
-**Returns:** <code>any</code>
-
 ---
 
 ### preload(...)
 
 ```typescript
-preload(options: PreloadOptions) => any
+preload(options: PreloadOptions) => Promise<void>
 ```
 
 | Param         | Type                                                      |
 | ------------- | --------------------------------------------------------- |
 | **`options`** | <code><a href="#preloadoptions">PreloadOptions</a></code> |
 
-**Returns:** <code>any</code>
-
 ---
 
 ### play(...)
 
 ```typescript
-play(options: { assetId: string; time?: number; }) => any
+play(options: { assetId: string; time?: number; }) => Promise<void>
 ```
 
 | Param         | Type                                             |
 | ------------- | ------------------------------------------------ |
 | **`options`** | <code>{ assetId: string; time?: number; }</code> |
 
-**Returns:** <code>any</code>
-
 ---
 
 ### pause(...)
 
 ```typescript
-pause(options: { assetId: string; }) => any
+pause(options: { assetId: string; }) => Promise<void>
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
-
-**Returns:** <code>any</code>
 
 ---
 
 ### resume(...)
 
 ```typescript
-resume(options: { assetId: string; }) => any
+resume(options: { assetId: string; }) => Promise<void>
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
-
-**Returns:** <code>any</code>
 
 ---
 
 ### loop(...)
 
 ```typescript
-loop(options: { assetId: string; }) => any
+loop(options: { assetId: string; }) => Promise<void>
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
-
-**Returns:** <code>any</code>
 
 ---
 
 ### stop(...)
 
 ```typescript
-stop(options: { assetId: string; }) => any
+stop(options: { assetId: string; }) => Promise<void>
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
-
-**Returns:** <code>any</code>
 
 ---
 
 ### unload(...)
 
 ```typescript
-unload(options: { assetId: string; }) => any
+unload(options: { assetId: string; }) => Promise<void>
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
-
-**Returns:** <code>any</code>
 
 ---
 
 ### setVolume(...)
 
 ```typescript
-setVolume(options: { assetId: string; volume: number; }) => any
+setVolume(options: { assetId: string; volume: number; }) => Promise<void>
 ```
 
 | Param         | Type                                              |
 | ------------- | ------------------------------------------------- |
 | **`options`** | <code>{ assetId: string; volume: number; }</code> |
 
-**Returns:** <code>any</code>
-
 ---
 
 ### setRate(...)
 
 ```typescript
-setRate(options: { assetId: string; rate: number; }) => any
+setRate(options: { assetId: string; rate: number; }) => Promise<void>
 ```
 
 | Param         | Type                                            |
 | ------------- | ----------------------------------------------- |
 | **`options`** | <code>{ assetId: string; rate: number; }</code> |
 
-**Returns:** <code>any</code>
-
 ---
 
 ### getCurrentTime(...)
 
 ```typescript
-getCurrentTime(options: { assetId: string; }) => any
+getCurrentTime(options: { assetId: string; }) => Promise<{ currentTime: number; }>
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
 
-**Returns:** <code>any</code>
+**Returns:** <code>Promise&lt;{ currentTime: number; }&gt;</code>
 
 ---
 
 ### getDuration(...)
 
 ```typescript
-getDuration(options: { assetId: string; }) => any
+getDuration(options: { assetId: string; }) => Promise<{ duration: number; }>
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
 
-**Returns:** <code>any</code>
+**Returns:** <code>Promise&lt;{ duration: number; }&gt;</code>
 
 ---
 
 ### isPlaying(...)
 
 ```typescript
-isPlaying(options: { assetId: string; }) => any
+isPlaying(options: { assetId: string; }) => Promise<{ isPlaying: boolean; }>
 ```
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
 
-**Returns:** <code>any</code>
+**Returns:** <code>Promise&lt;{ isPlaying: boolean; }&gt;</code>
+
+---
+
+### addListener('complete', ...)
+
+```typescript
+addListener(eventName: "complete", listenerFunc: CompletedListener) => Promise<PluginListenerHandle> & PluginListenerHandle
+```
+
+Listen for complete event
+
+| Param              | Type                                                            |
+| ------------------ | --------------------------------------------------------------- |
+| **`eventName`**    | <code>'complete'</code>                                         |
+| **`listenerFunc`** | <code><a href="#completedlistener">CompletedListener</a></code> |
+
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+
+**Since:** 5.0.0
 
 ---
 
@@ -409,5 +408,23 @@ isPlaying(options: { assetId: string; }) => any
 | **`volume`**          | <code>number</code>  |
 | **`audioChannelNum`** | <code>number</code>  |
 | **`isUrl`**           | <code>boolean</code> |
+
+#### PluginListenerHandle
+
+| Prop         | Type                                      |
+| ------------ | ----------------------------------------- |
+| **`remove`** | <code>() =&gt; Promise&lt;void&gt;</code> |
+
+#### CompletedEvent
+
+| Prop          | Type                | Description                | Since |
+| ------------- | ------------------- | -------------------------- | ----- |
+| **`assetId`** | <code>string</code> | Emit when a play completes | 5.0.0 |
+
+### Type Aliases
+
+#### CompletedListener
+
+<code>(state: <a href="#completedevent">CompletedEvent</a>): void</code>
 
 </docgen-api>
