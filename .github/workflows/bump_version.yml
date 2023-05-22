@@ -40,12 +40,9 @@ jobs:
         run: pnpm dlx capacitor-plugin-standard-version@latest --prerelease alpha
       - name: Update Doc
         run: pnpm docgen
-      - name: Update Doc
-        run: pnpm docgen:api
       - name: Add doc to github
         run: |
           git add README.md
-          git add api.md
           git commit --amend --no-edit
       - name: Push to origin
         run: |
