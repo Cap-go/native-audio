@@ -57,9 +57,7 @@ public class NativeAudio
     super.load();
 
     this.audioManager =
-      (AudioManager) this
-        .getActivity()
-        .getSystemService(Context.AUDIO_SERVICE);
+      (AudioManager) this.getActivity().getSystemService(Context.AUDIO_SERVICE);
   }
 
   @Override
@@ -154,8 +152,7 @@ public class NativeAudio
 
   @PluginMethod
   public void play(final PluginCall call) {
-    this
-      .getActivity()
+    this.getActivity()
       .runOnUiThread(
         new Runnable() {
           @Override
