@@ -41,7 +41,8 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
                         player.delegate = self
                     }
                 }
-            } catch {
+            } catch let error as NSError {
+                print(error.debugDescription)
                 print("Error loading \(String(describing: path))")
             }
         }
