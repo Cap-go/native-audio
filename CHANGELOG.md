@@ -2,43 +2,53 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [6.0.7](https://github.com/Cap-go/native-audio/compare/v6.0.4...v6.0.7) (2023-05-23)
-
+### [6.0.8](https://github.com/Cap-go/native-audio/compare/v6.0.4...v6.0.8) (2023-05-29)
 
 ### Bug Fixes
 
-* build script ([02e6c3b](https://github.com/Cap-go/native-audio/commit/02e6c3b9785b46d8b682b0e48d17eb3fa51b0076))
-* bump ([f7b144c](https://github.com/Cap-go/native-audio/commit/f7b144c68172d5ef618e2968e9444ba838ce3b70))
-* bump ([eba2aa6](https://github.com/Cap-go/native-audio/commit/eba2aa68c73ff7fb8f248303841c1e09e23ce71b))
-* CI ([273a855](https://github.com/Cap-go/native-audio/commit/273a855a7f8e740d0a16052fc10c68d37c9a64af))
-* **deps:** update dependency com.android.tools.build:gradle to v8.0.1 ([b27eea1](https://github.com/Cap-go/native-audio/commit/b27eea1ebf7d69678c7e54e77331fceb058371db))
-* packages ([85f4b47](https://github.com/Cap-go/native-audio/commit/85f4b4744057806af3748820480df77b3b574e33))
-* use latest rimraf ([4dd0fe9](https://github.com/Cap-go/native-audio/commit/4dd0fe90838c5d0053416e9e274f0b1450993e8b))
+- build script ([02e6c3b](https://github.com/Cap-go/native-audio/commit/02e6c3b9785b46d8b682b0e48d17eb3fa51b0076))
+- bump ([f7b144c](https://github.com/Cap-go/native-audio/commit/f7b144c68172d5ef618e2968e9444ba838ce3b70))
+- bump ([eba2aa6](https://github.com/Cap-go/native-audio/commit/eba2aa68c73ff7fb8f248303841c1e09e23ce71b))
+- CI ([273a855](https://github.com/Cap-go/native-audio/commit/273a855a7f8e740d0a16052fc10c68d37c9a64af))
+- **deps:** update dependency com.android.tools.build:gradle to v8.0.1 ([b27eea1](https://github.com/Cap-go/native-audio/commit/b27eea1ebf7d69678c7e54e77331fceb058371db))
+- **deps:** update dependency com.android.tools.build:gradle to v8.0.2 ([41cd39a](https://github.com/Cap-go/native-audio/commit/41cd39a118ee63b3d2056d29f0492f760ff19f33))
+- packages ([85f4b47](https://github.com/Cap-go/native-audio/commit/85f4b4744057806af3748820480df77b3b574e33))
+- use latest rimraf ([4dd0fe9](https://github.com/Cap-go/native-audio/commit/4dd0fe90838c5d0053416e9e274f0b1450993e8b))
+
+### [6.0.7](https://github.com/Cap-go/native-audio/compare/v6.0.4...v6.0.7) (2023-05-23)
+
+### Bug Fixes
+
+- build script ([02e6c3b](https://github.com/Cap-go/native-audio/commit/02e6c3b9785b46d8b682b0e48d17eb3fa51b0076))
+- bump ([f7b144c](https://github.com/Cap-go/native-audio/commit/f7b144c68172d5ef618e2968e9444ba838ce3b70))
+- bump ([eba2aa6](https://github.com/Cap-go/native-audio/commit/eba2aa68c73ff7fb8f248303841c1e09e23ce71b))
+- CI ([273a855](https://github.com/Cap-go/native-audio/commit/273a855a7f8e740d0a16052fc10c68d37c9a64af))
+- **deps:** update dependency com.android.tools.build:gradle to v8.0.1 ([b27eea1](https://github.com/Cap-go/native-audio/commit/b27eea1ebf7d69678c7e54e77331fceb058371db))
+- packages ([85f4b47](https://github.com/Cap-go/native-audio/commit/85f4b4744057806af3748820480df77b3b574e33))
+- use latest rimraf ([4dd0fe9](https://github.com/Cap-go/native-audio/commit/4dd0fe90838c5d0053416e9e274f0b1450993e8b))
 
 ### [6.0.6](https://github.com/Cap-go/native-audio/compare/v6.0.4...v6.0.6) (2023-05-22)
 
-
 ### Bug Fixes
 
-* build script ([02e6c3b](https://github.com/Cap-go/native-audio/commit/02e6c3b9785b46d8b682b0e48d17eb3fa51b0076))
-* bump ([f7b144c](https://github.com/Cap-go/native-audio/commit/f7b144c68172d5ef618e2968e9444ba838ce3b70))
-* bump ([eba2aa6](https://github.com/Cap-go/native-audio/commit/eba2aa68c73ff7fb8f248303841c1e09e23ce71b))
-* CI ([273a855](https://github.com/Cap-go/native-audio/commit/273a855a7f8e740d0a16052fc10c68d37c9a64af))
-* **deps:** update dependency com.android.tools.build:gradle to v8.0.1 ([b27eea1](https://github.com/Cap-go/native-audio/commit/b27eea1ebf7d69678c7e54e77331fceb058371db))
-* packages ([85f4b47](https://github.com/Cap-go/native-audio/commit/85f4b4744057806af3748820480df77b3b574e33))
-* use latest rimraf ([4dd0fe9](https://github.com/Cap-go/native-audio/commit/4dd0fe90838c5d0053416e9e274f0b1450993e8b))
+- build script ([02e6c3b](https://github.com/Cap-go/native-audio/commit/02e6c3b9785b46d8b682b0e48d17eb3fa51b0076))
+- bump ([f7b144c](https://github.com/Cap-go/native-audio/commit/f7b144c68172d5ef618e2968e9444ba838ce3b70))
+- bump ([eba2aa6](https://github.com/Cap-go/native-audio/commit/eba2aa68c73ff7fb8f248303841c1e09e23ce71b))
+- CI ([273a855](https://github.com/Cap-go/native-audio/commit/273a855a7f8e740d0a16052fc10c68d37c9a64af))
+- **deps:** update dependency com.android.tools.build:gradle to v8.0.1 ([b27eea1](https://github.com/Cap-go/native-audio/commit/b27eea1ebf7d69678c7e54e77331fceb058371db))
+- packages ([85f4b47](https://github.com/Cap-go/native-audio/commit/85f4b4744057806af3748820480df77b3b574e33))
+- use latest rimraf ([4dd0fe9](https://github.com/Cap-go/native-audio/commit/4dd0fe90838c5d0053416e9e274f0b1450993e8b))
 
 ### [6.0.5](https://github.com/Cap-go/native-audio/compare/v6.0.4...v6.0.5) (2023-05-22)
 
-
 ### Bug Fixes
 
-* build script ([02e6c3b](https://github.com/Cap-go/native-audio/commit/02e6c3b9785b46d8b682b0e48d17eb3fa51b0076))
-* bump ([f7b144c](https://github.com/Cap-go/native-audio/commit/f7b144c68172d5ef618e2968e9444ba838ce3b70))
-* bump ([eba2aa6](https://github.com/Cap-go/native-audio/commit/eba2aa68c73ff7fb8f248303841c1e09e23ce71b))
-* CI ([273a855](https://github.com/Cap-go/native-audio/commit/273a855a7f8e740d0a16052fc10c68d37c9a64af))
-* **deps:** update dependency com.android.tools.build:gradle to v8.0.1 ([b27eea1](https://github.com/Cap-go/native-audio/commit/b27eea1ebf7d69678c7e54e77331fceb058371db))
-* use latest rimraf ([4dd0fe9](https://github.com/Cap-go/native-audio/commit/4dd0fe90838c5d0053416e9e274f0b1450993e8b))
+- build script ([02e6c3b](https://github.com/Cap-go/native-audio/commit/02e6c3b9785b46d8b682b0e48d17eb3fa51b0076))
+- bump ([f7b144c](https://github.com/Cap-go/native-audio/commit/f7b144c68172d5ef618e2968e9444ba838ce3b70))
+- bump ([eba2aa6](https://github.com/Cap-go/native-audio/commit/eba2aa68c73ff7fb8f248303841c1e09e23ce71b))
+- CI ([273a855](https://github.com/Cap-go/native-audio/commit/273a855a7f8e740d0a16052fc10c68d37c9a64af))
+- **deps:** update dependency com.android.tools.build:gradle to v8.0.1 ([b27eea1](https://github.com/Cap-go/native-audio/commit/b27eea1ebf7d69678c7e54e77331fceb058371db))
+- use latest rimraf ([4dd0fe9](https://github.com/Cap-go/native-audio/commit/4dd0fe90838c5d0053416e9e274f0b1450993e8b))
 
 ### [6.0.4](https://github.com/Cap-go/native-audio/compare/v6.0.3...v6.0.4) (2023-05-22)
 
