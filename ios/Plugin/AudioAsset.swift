@@ -34,6 +34,7 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
                 let player: AVAudioPlayer! = try AVAudioPlayer(contentsOf: pathUrl)
 
                 if player != nil {
+                    player.enableRate = true
                     player.volume = volume
                     player.prepareToPlay()
                     self.channels.append(player)
