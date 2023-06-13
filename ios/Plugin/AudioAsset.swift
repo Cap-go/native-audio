@@ -69,12 +69,16 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
     }
 
     func play(time: TimeInterval) {
-        let player: AVAudioPlayer = channels[playIndex]
-        player.currentTime = time
-        player.numberOfLoops = 0
-        player.play()
-        playIndex += 1
-        playIndex = playIndex % channels.count
+        let player: AVAudioPlayer
+
+        if channels.count > 0 {
+            player = channels[playIndex]
+            player.currentTime = time
+            player.numberOfLoops = 0
+            player.play()
+            playIndex += 1
+            playIndex = playIndex % channels.count
+        }
     }
 
     func playWithFade(time: TimeInterval) {
