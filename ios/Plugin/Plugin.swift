@@ -55,6 +55,7 @@ public class NativeAudio: CAPPlugin {
     @objc func play(_ call: CAPPluginCall) {
         let audioId = call.getString(Constant.AssetIdKey) ?? ""
         let time = call.getDouble("time") ?? 0
+        let delay = call.getDouble("delay") ?? 0
         if audioId != "" {
             let queue = DispatchQueue(label: "ee.forgr.audio.complex.queue", qos: .userInitiated)
 

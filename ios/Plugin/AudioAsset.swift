@@ -68,14 +68,14 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
         return player.duration
     }
 
-    func play(time: TimeInterval) {
+    func play(time: TimeInterval, delay: TimeInterval) {
         let player: AVAudioPlayer
 
         if channels.count > 0 {
             player = channels[playIndex]
             player.currentTime = time
             player.numberOfLoops = 0
-            player.play()
+            player.play(atTime: player.deviceCurrentTime + delay)
             playIndex += 1
             playIndex = playIndex % channels.count
         }
