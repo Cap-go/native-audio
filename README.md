@@ -236,12 +236,12 @@ preload(options: PreloadOptions) => Promise<void>
 ### play(...)
 
 ```typescript
-play(options: { assetId: string; time?: number; }) => Promise<void>
+play(options: { assetId: string; time?: number; delay?: number; }) => Promise<void>
 ```
 
-| Param         | Type                                             |
-| ------------- | ------------------------------------------------ |
-| **`options`** | <code>{ assetId: string; time?: number; }</code> |
+| Param         | Type                                                             |
+| ------------- | ---------------------------------------------------------------- |
+| **`options`** | <code>{ assetId: string; time?: number; delay?: number; }</code> |
 
 ---
 
@@ -394,10 +394,12 @@ Listen for complete event
 
 #### ConfigureOptions
 
-| Prop        | Type                 |
-| ----------- | -------------------- |
-| **`fade`**  | <code>boolean</code> |
-| **`focus`** | <code>boolean</code> |
+| Prop               | Type                 |
+| ------------------ | -------------------- |
+| **`fade`**         | <code>boolean</code> |
+| **`focus`**        | <code>boolean</code> |
+| **`background`**   | <code>boolean</code> |
+| **`ignoreSilent`** | <code>boolean</code> |
 
 #### PreloadOptions
 
