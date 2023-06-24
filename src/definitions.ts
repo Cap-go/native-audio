@@ -40,6 +40,8 @@ export interface NativeAudio {
 export interface ConfigureOptions {
   fade?: boolean;
   focus?: boolean;
+  background?: boolean;
+  ignoreSilent?: boolean;
 }
 
 export interface PreloadOptions {
