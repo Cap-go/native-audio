@@ -2,6 +2,7 @@ import AVFoundation
 import Capacitor
 import CoreAudio
 import Foundation
+import Foundation
 
 enum MyError: Error {
   case runtimeError(String)
@@ -70,6 +71,38 @@ public class NativeAudio: CAPPlugin {
 
     }
 
+    if let ignoreSilent = call.getBool(Constant.IgnoreSilent) {
+
+      do {
+
+        if ignoreSilent == false {
+
+          if let focus = call.getBool(Constant.FocusAudio) {
+
+            do {
+
+              if focus {
+
+                try self.session.setCategory(AVAudioSession.Category.ambient)
+
+              } else {
+
+                try self.session.setCategory(
+                  AVAudioSession.Category.ambient, options: .mixWithOthers)
+
+              }
+
+            } catch {
+
+              print("Failed to set setCategory audio")
+
+            }
+
+          }
+
+        }
+      }
+    }
   }
 
   @objc func preload(_ call: CAPPluginCall) {
