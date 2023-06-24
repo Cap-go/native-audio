@@ -394,12 +394,12 @@ Listen for complete event
 
 #### ConfigureOptions
 
-| Prop               | Type                 | Description |
+| Prop               | Type                 |
 | ------------------ | -------------------- |
-| **`fade`**         | <code>boolean</code> ||
-| **`focus`**        | <code>boolean</code> | Stops all other audio when playing |
-| **`background`**   | <code>boolean</code> | Allows play in background mode (iOS only, must enable capability)
-| **`ignoreSilent`** | <code>boolean</code> | Ignore silent switch (iOS only)
+| **`fade`**         | <code>boolean</code> |
+| **`focus`**        | <code>boolean</code> |
+| **`background`**   | <code>boolean</code> |
+| **`ignoreSilent`** | <code>boolean</code> |
 
 #### PreloadOptions
 

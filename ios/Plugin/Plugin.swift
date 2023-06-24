@@ -126,7 +126,7 @@ public class NativeAudio: CAPPlugin {
               if self.fadeMusic {
                 audioAsset?.playWithFade(time: time)
               } else {
-                audioAsset?.play(time: time)
+                  audioAsset?.play(time: time, delay: delay)
               }
               call.resolve()
             } else if asset is Int32 {

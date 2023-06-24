@@ -14,6 +14,8 @@ public class Constant {
     public static let Volume = "volume"
     public static let Rate = "rate"
     public static let Loop = "loop"
+    public static let Background = "background"
+    public static let IgnoreSilent = "ignoreSilent"
 
     public static let ErrorAssetId = "Asset Id is missing"
     public static let ErrorAssetPath = "Asset Path is missing"
