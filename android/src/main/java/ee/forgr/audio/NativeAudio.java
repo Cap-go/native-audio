@@ -135,6 +135,7 @@ public class NativeAudio
         this.audioManager.abandonAudioFocus(this);
       }
     }
+    call.resolve();
   }
 
   @PluginMethod
