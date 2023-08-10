@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.0.16](https://github.com/Cap-go/native-audio/compare/6.0.15...6.0.16) (2023-08-10)
+
+
+### Bug Fixes
+
+* build ([68e41bb](https://github.com/Cap-go/native-audio/commit/68e41bb3fe9d9326bbc86598131082439cc8642b))
+* ci/CD no husky ([5e2ec99](https://github.com/Cap-go/native-audio/commit/5e2ec999ee12aaa9514788ae811c9fdb06440568))
+* try with husky but disabling it in CI ([2888073](https://github.com/Cap-go/native-audio/commit/2888073beca5869555df5686c34b851d208fb835))
+
 ### [6.0.15](https://github.com/Cap-go/native-audio/compare/6.0.14...6.0.15) (2023-08-10)
 
 
