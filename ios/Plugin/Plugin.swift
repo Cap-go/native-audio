@@ -34,74 +34,70 @@ public class NativeAudio: CAPPlugin {
             self.fadeMusic = fade
         }
 
-        if let focus = call.getBool(Constant.FocusAudio) {
+        let focus = call.getBool(Constant.FocusAudio) ?? false
 
-            do {
+        do {
 
-                if focus {
+            if focus {
 
-                    try self.session.setCategory(AVAudioSession.Category.playback)
-
-                }
-
-            } catch {
-
-                print("Failed to set setCategory audio")
+                try self.session.setCategory(AVAudioSession.Category.playback)
 
             }
 
+        } catch {
+
+            print("Failed to set setCategory audio")
+
         }
 
-        if let background = call.getBool(Constant.Background) {
+        let background = call.getBool(Constant.Background) ?? false
 
-            do {
+        do {
 
-                if background {
+            if background {
 
-                    try self.session.setActive(true)
-
-                }
-
-            } catch {
-
-                print("Failed to set setSession true")
+                try self.session.setActive(true)
 
             }
 
+        } catch {
+
+            print("Failed to set setSession true")
+
         }
 
-        if let ignoreSilent = call.getBool(Constant.IgnoreSilent) {
+        let ignoreSilent = call.getBool(Constant.IgnoreSilent) ?? true
 
-            do {
+        do {
 
-                if ignoreSilent == false {
+            if ignoreSilent == false {
 
-                    if let focus = call.getBool(Constant.FocusAudio) {
+                if let focus = call.getBool(Constant.FocusAudio) {
 
-                        do {
+                    do {
 
-                            if focus {
+                        if focus {
 
-                                try self.session.setCategory(AVAudioSession.Category.ambient)
+                            try self.session.setCategory(AVAudioSession.Category.ambient)
 
-                            } else {
+                        } else {
 
-                                try self.session.setCategory(
-                                    AVAudioSession.Category.ambient, options: .mixWithOthers)
-
-                            }
-
-                        } catch {
-
-                            print("Failed to set setCategory audio")
+                            try self.session.setCategory(
+                                AVAudioSession.Category.ambient, options: .mixWithOthers)
 
                         }
+
+                    } catch {
+
+                        print("Failed to set setCategory audio")
 
                     }
 
                 }
+
             }
         }
+
     }
 
     @objc func preload(_ call: CAPPluginCall) {
