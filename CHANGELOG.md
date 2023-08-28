@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.0.19](https://github.com/Cap-go/native-audio/compare/6.0.18...6.0.19) (2023-08-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency com.android.tools.build:gradle to v8.1.1 ([8c41742](https://github.com/Cap-go/native-audio/commit/8c41742d37f6a34372210e1d33d755946a6eb505))
+
 ### [6.0.18](https://github.com/Cap-go/native-audio/compare/6.0.17...6.0.18) (2023-08-21)
 
 ### [6.0.17](https://github.com/Cap-go/native-audio/compare/6.0.16...6.0.17) (2023-08-10)
