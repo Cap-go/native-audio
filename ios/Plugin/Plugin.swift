@@ -97,7 +97,7 @@ public class NativeAudio: CAPPlugin {
 
             }
         }
-
+        call.resolve()
     }
 
     @objc func preload(_ call: CAPPluginCall) {

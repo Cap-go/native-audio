@@ -1,6 +1,6 @@
 {
   "name": "@capgo/native-audio",
-  "version": "6.0.12",
+  "version": "6.0.19",
   "description": "A native plugin for native audio engine",
   "main": "dist/plugin.js",
   "module": "dist/esm/index.js",
@@ -34,8 +34,7 @@
     "build": "npm run clean && npm run docgen && tsc && rollup -c rollup.config.mjs",
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",
-    "prepublishOnly": "npm run build",
-    "prepare": "husky install"
+    "prepublishOnly": "npm run build"
   },
   "author": "Martin Donadieu <martindonadieu@gmail.com>",
   "license": "MIT",

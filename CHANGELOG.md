@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.0.19](https://github.com/Cap-go/native-audio/compare/6.0.18...6.0.19) (2023-08-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency com.android.tools.build:gradle to v8.1.1 ([8c41742](https://github.com/Cap-go/native-audio/commit/8c41742d37f6a34372210e1d33d755946a6eb505))
+
+### [6.0.18](https://github.com/Cap-go/native-audio/compare/6.0.17...6.0.18) (2023-08-21)
+
+### [6.0.17](https://github.com/Cap-go/native-audio/compare/6.0.16...6.0.17) (2023-08-10)
+
+### [6.0.16](https://github.com/Cap-go/native-audio/compare/6.0.15...6.0.16) (2023-08-10)
+
+
+### Bug Fixes
+
+* build ([68e41bb](https://github.com/Cap-go/native-audio/commit/68e41bb3fe9d9326bbc86598131082439cc8642b))
+* ci/CD no husky ([5e2ec99](https://github.com/Cap-go/native-audio/commit/5e2ec999ee12aaa9514788ae811c9fdb06440568))
+* try with husky but disabling it in CI ([2888073](https://github.com/Cap-go/native-audio/commit/2888073beca5869555df5686c34b851d208fb835))
+
+### [6.0.15](https://github.com/Cap-go/native-audio/compare/6.0.14...6.0.15) (2023-08-10)
+
+
+### Bug Fixes
+
+* build script ([0effa42](https://github.com/Cap-go/native-audio/commit/0effa42a9df522cdd82b40873b160c118239962b))
+* CI/CD ([3609c20](https://github.com/Cap-go/native-audio/commit/3609c20c5b36b69c8e8f9ba7447048ee2d2e8f85))
+* issue build CI/CD ([78168e9](https://github.com/Cap-go/native-audio/commit/78168e98ec67d65d94114f006fc1c79665ed07fa))
+* remove husky install for CI/CD ([6093dd5](https://github.com/Cap-go/native-audio/commit/6093dd515c7889e3205abc8bd574d1f7f222a819))
+
+### [6.0.14](https://github.com/Cap-go/native-audio/compare/6.0.13...6.0.14) (2023-08-10)
+
+### Bug Fixes
+
+- **deps:** update dependency com.android.tools.build:gradle to v8.1.0 ([a336e9c](https://github.com/Cap-go/native-audio/commit/a336e9c3c59efed21a78bff4a05d7632c1b5e5d0))
+
+### [6.0.13](https://github.com/Cap-go/native-audio/compare/6.0.12...6.0.13) (2023-07-03)
+
 ### [6.0.12](https://github.com/Cap-go/native-audio/compare/6.0.11...6.0.12) (2023-06-14)
 
 ### [6.0.11](https://github.com/Cap-go/native-audio/compare/6.0.10...6.0.11) (2023-06-13)
