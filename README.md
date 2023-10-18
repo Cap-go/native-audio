@@ -1,14 +1,23 @@
-<a href="https://capgo.app/"><img src='https://raw.githubusercontent.com/Cap-go/capgo/main/assets/capgo_banner.png' alt='Capgo - Instant updates for capacitor'/></a>
+<a href="https://capgo.app/">
+  <img
+    src="https://raw.githubusercontent.com/Cap-go/capgo/main/assets/capgo_banner.png"
+    alt="Capgo - Instant updates for capacitor"
+  />
+</a>
 
 <div align="center">
-<h2><a href="https://capgo.app/">Check out: Capgo — Instant updates for capacitor</a></h2>
+  <h2>
+    <a href="https://capgo.app/">Check out: Capgo — Instant updates for capacitor</a>
+  </h2>
 </div>
 
 <h3 align="center">Native Audio</h3>
-<p align="center"><strong><code>@capgo/native-audio</code></strong></p>
 <p align="center">
-  Capacitor plugin for playing sounds.
+  <strong>
+    <code>@capgo/native-audio</code>
+  </strong>
 </p>
+<p align="center">Capacitor plugin for playing sounds.</p>
 
 <p align="center">
   <img src="https://img.shields.io/maintenance/yes/2023?style=flat-square" />
@@ -236,12 +245,12 @@ preload(options: PreloadOptions) => Promise<void>
 ### play(...)
 
 ```typescript
-play(options: { assetId: string; time?: number; }) => Promise<void>
+play(options: { assetId: string; time?: number; delay?: number; }) => Promise<void>
 ```
 
-| Param         | Type                                             |
-| ------------- | ------------------------------------------------ |
-| **`options`** | <code>{ assetId: string; time?: number; }</code> |
+| Param         | Type                                                             |
+| ------------- | ---------------------------------------------------------------- |
+| **`options`** | <code>{ assetId: string; time?: number; delay?: number; }</code> |
 
 ---
 
@@ -394,10 +403,11 @@ Listen for complete event
 
 #### ConfigureOptions
 
-| Prop        | Type                 |
-| ----------- | -------------------- |
-| **`fade`**  | <code>boolean</code> |
-| **`focus`** | <code>boolean</code> |
+| Prop             | Type                 |
+| ---------------- | -------------------- |
+| **`fade`**       | <code>boolean</code> |
+| **`focus`**      | <code>boolean</code> |
+| **`background`** | <code>boolean</code> |
 
 #### PreloadOptions
 
@@ -425,6 +435,8 @@ Listen for complete event
 
 #### CompletedListener
 
-<code>(state: <a href="#completedevent">CompletedEvent</a>): void</code>
+<code>
+  (state: <a href="#completedevent">CompletedEvent</a>): void
+</code>
 
 </docgen-api>

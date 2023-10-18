@@ -13,7 +13,11 @@ export type CompletedListener = (state: CompletedEvent) => void;
 export interface NativeAudio {
   configure(options: ConfigureOptions): Promise<void>;
   preload(options: PreloadOptions): Promise<void>;
-  play(options: { assetId: string; time?: number }): Promise<void>;
+  play(options: {
+    assetId: string;
+    time?: number;
+    delay?: number;
+  }): Promise<void>;
   pause(options: { assetId: string }): Promise<void>;
   resume(options: { assetId: string }): Promise<void>;
   loop(options: { assetId: string }): Promise<void>;
@@ -40,6 +44,7 @@ export interface NativeAudio {
 export interface ConfigureOptions {
   fade?: boolean;
   focus?: boolean;
+  background?: boolean;
 }
 
 export interface PreloadOptions {

@@ -1,16 +1,14 @@
 import AVFoundation
-import Foundation
 import Capacitor
 import CoreAudio
+import Foundation
 
 enum MyError: Error {
     case runtimeError(String)
 }
 
-/**
- * Please read the Capacitor iOS Plugin Development Guide
- * here: https://capacitor.ionicframework.com/docs/plugins/ios
- */
+/// Please read the Capacitor iOS Plugin Development Guide
+/// here: https://capacitor.ionicframework.com/docs/plugins/ios
 @objc(NativeAudio)
 public class NativeAudio: CAPPlugin {
 
@@ -24,7 +22,7 @@ public class NativeAudio: CAPPlugin {
         self.fadeMusic = false
 
         do {
-            try self.session.setCategory(AVAudioSession.Category.playback)
+            try self.session.setCategory(AVAudioSession.Category.playback, options: .mixWithOthers)
             try self.session.setActive(false)
         } catch {
             print("Failed to set session category")
@@ -35,15 +33,68 @@ public class NativeAudio: CAPPlugin {
         if let fade = call.getBool(Constant.FadeKey) {
             self.fadeMusic = fade
         }
-        if let focus = call.getBool(Constant.FocusAudio) {
-            do {
-                if focus {
-                    try self.session.setCategory(AVAudioSession.Category.playback)
-                } else {
-                    try self.session.setCategory(AVAudioSession.Category.ambient)
+
+        let focus = call.getBool(Constant.FocusAudio) ?? false
+
+        do {
+
+            if focus {
+
+                try self.session.setCategory(AVAudioSession.Category.playback)
+
+            }
+
+        } catch {
+
+            print("Failed to set setCategory audio")
+
+        }
+
+        let background = call.getBool(Constant.Background) ?? false
+
+        do {
+
+            if background {
+
+                try self.session.setActive(true)
+
+            }
+
+        } catch {
+
+            print("Failed to set setSession true")
+
+        }
+
+        let ignoreSilent = call.getBool(Constant.IgnoreSilent) ?? true
+
+        do {
+
+            if ignoreSilent == false {
+
+                if let focus = call.getBool(Constant.FocusAudio) {
+
+                    do {
+
+                        if focus {
+
+                            try self.session.setCategory(AVAudioSession.Category.ambient)
+
+                        } else {
+
+                            try self.session.setCategory(
+                                AVAudioSession.Category.ambient, options: .mixWithOthers)
+
+                        }
+
+                    } catch {
+
+                        print("Failed to set setCategory audio")
+
+                    }
+
                 }
-            } catch {
-                print("Failed to set setCategory audio")
+
             }
         }
         call.resolve()
@@ -56,6 +107,7 @@ public class NativeAudio: CAPPlugin {
     @objc func play(_ call: CAPPluginCall) {
         let audioId = call.getString(Constant.AssetIdKey) ?? ""
         let time = call.getDouble("time") ?? 0
+        let delay = call.getDouble("delay") ?? 0
         if audioId != "" {
             let queue = DispatchQueue(label: "ee.forgr.audio.complex.queue", qos: .userInitiated)
 
@@ -70,12 +122,12 @@ public class NativeAudio: CAPPlugin {
                             if self.fadeMusic {
                                 audioAsset?.playWithFade(time: time)
                             } else {
-                                audioAsset?.play(time: time)
+                                audioAsset?.play(time: time, delay: delay)
                             }
                             call.resolve()
                         } else if asset is Int32 {
                             let audioAsset = asset as? NSNumber ?? 0
-                            AudioServicesPlaySystemSound(SystemSoundID(audioAsset.intValue ))
+                            AudioServicesPlaySystemSound(SystemSoundID(audioAsset.intValue))
                             call.resolve()
                         } else {
                             call.reject(Constant.ErrorAssetNotFound)
@@ -164,7 +216,7 @@ public class NativeAudio: CAPPlugin {
         if self.audioList.count > 0 {
             let asset = self.audioList[audioId]
             if asset != nil && asset is AudioAsset {
-                guard let audioAsset=asset as? AudioAsset else {
+                guard let audioAsset = asset as? AudioAsset else {
                     call.reject("Cannot cast to AudioAsset")
                     return
                 }
@@ -256,8 +308,10 @@ public class NativeAudio: CAPPlugin {
                             self.audioList[audioId] = NSNumber(value: Int32(soundId))
                             call.resolve()
                         } else {
-                            let audioAsset: AudioAsset = AudioAsset(owner: self,
-                                                                    withAssetId: audioId, withPath: basePath, withChannels: channels, withVolume: volume, withFadeDelay: delay)
+                            let audioAsset: AudioAsset = AudioAsset(
+                                owner: self,
+                                withAssetId: audioId, withPath: basePath, withChannels: channels,
+                                withVolume: volume, withFadeDelay: delay)
                             self.audioList[audioId] = audioAsset
                             call.resolve()
                         }
