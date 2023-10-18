@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.1.0](https://github.com/Cap-go/native-audio/compare/6.0.21...6.1.0) (2023-10-18)
+
+
+### Features
+
+* ios background and delay ([d1b1866](https://github.com/Cap-go/native-audio/commit/d1b18668b3322a6cb361d5ab57c33a561137d803))
+* ios background and ignoreSilent config ([b5307b9](https://github.com/Cap-go/native-audio/commit/b5307b94175a44757fcb68f5be435cb240602c7b))
+* ios play delay ([b8c2599](https://github.com/Cap-go/native-audio/commit/b8c2599f0ad345d549ffe75305e6639309958879))
+
+
+### Bug Fixes
+
+* code cleanup ([d7f6f9e](https://github.com/Cap-go/native-audio/commit/d7f6f9e8e10d9b668d600a0820d78b9515e96936))
+* missing constants ([060cfa5](https://github.com/Cap-go/native-audio/commit/060cfa547f1b87756408d1e7bafefee308a3cddf))
+* npm run fmt - swiftlint cleanup ([af92cdf](https://github.com/Cap-go/native-audio/commit/af92cdfc587293e835fcc287cf376d1c8aa4012a))
+
 ### [6.0.21](https://github.com/Cap-go/native-audio/compare/6.0.20...6.0.21) (2023-10-09)
 
 ### [6.0.20](https://github.com/Cap-go/native-audio/compare/6.0.19...6.0.20) (2023-10-02)
