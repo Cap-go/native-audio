@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.1.3](https://github.com/Cap-go/native-audio/compare/6.1.2...6.1.3) (2023-10-23)
+
 ### [6.1.2](https://github.com/Cap-go/native-audio/compare/6.1.1...6.1.2) (2023-10-23)
 
 ### [6.1.1](https://github.com/Cap-go/native-audio/compare/6.1.0...6.1.1) (2023-10-23)
