@@ -1,6 +1,6 @@
 {
   "name": "@capgo/native-audio",
-  "version": "6.1.31",
+  "version": "6.1.32",
   "description": "A native plugin for native audio engine",
   "main": "dist/plugin.js",
   "module": "dist/esm/index.js",
