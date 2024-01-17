@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.1.36](https://github.com/Cap-go/native-audio/compare/6.1.35...6.1.36) (2024-01-17)
+
+
+### Bug Fixes
+
+* IOS not mixing as it should ([c801607](https://github.com/Cap-go/native-audio/commit/c801607241183a14d5bcb52d32819393aabd3024))
+
 ### [6.1.35](https://github.com/Cap-go/native-audio/compare/6.1.34...6.1.35) (2024-01-17)
 
 
