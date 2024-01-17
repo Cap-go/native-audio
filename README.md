@@ -435,8 +435,6 @@ Listen for complete event
 
 #### CompletedListener
 
-<code>
-  (state: <a href="#completedevent">CompletedEvent</a>): void
-</code>
+<code>(state: <a href="#completedevent">CompletedEvent</a>): void</code>
 
 </docgen-api>
