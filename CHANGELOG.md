@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.2.0](https://github.com/Cap-go/native-audio/compare/6.1.36...6.2.0) (2024-01-17)
+
+
+### Features
+
+* allow remote load files ([3538c25](https://github.com/Cap-go/native-audio/commit/3538c25742184a4b4a5b19eb3928dfef12c707bf))
+
 ### [6.1.36](https://github.com/Cap-go/native-audio/compare/6.1.35...6.1.36) (2024-01-17)
 
 
