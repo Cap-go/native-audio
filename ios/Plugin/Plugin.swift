@@ -35,12 +35,9 @@ public class NativeAudio: CAPPlugin {
         }
 
         let focus = call.getBool(Constant.FocusAudio) ?? false
-
         do {
-
             if focus {
-
-                try self.session.setCategory(AVAudioSession.Category.playback)
+                try self.session.setCategory(AVAudioSession.Category.playback, options: .duckOthers)
 
             }
 
@@ -78,7 +75,7 @@ public class NativeAudio: CAPPlugin {
 
                         if focus {
 
-                            try self.session.setCategory(AVAudioSession.Category.ambient)
+                            try self.session.setCategory(AVAudioSession.Category.ambient, options: .duckOthers)
 
                         } else {
 
