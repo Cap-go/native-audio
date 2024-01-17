@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
@@ -419,13 +420,15 @@ public class NativeAudio
   private void preloadAsset(PluginCall call) {
     double volume = 1.0;
     int audioChannelNum = 1;
+    JSObject status = new JSObject();
+    status.put("STATUS", "OK");
 
     try {
       initSoundPool();
 
       String audioId = call.getString(ASSET_ID);
 
-      boolean isUrl = call.getBoolean("isUrl", false);
+      boolean isLocalUrl = Boolean.TRUE.equals(call.getBoolean("isUrl", false));
 
       if (!isStringValid(audioId)) {
         call.reject(ERROR_AUDIO_ID_MISSING + " - " + audioId);
@@ -457,7 +460,7 @@ public class NativeAudio
         }
 
         AssetFileDescriptor assetFileDescriptor;
-        if (isUrl) {
+        if (isLocalUrl) {
           File f = new File(new URI(fullPath));
           ParcelFileDescriptor p = ParcelFileDescriptor.open(
             f,
@@ -465,13 +468,41 @@ public class NativeAudio
           );
           assetFileDescriptor = new AssetFileDescriptor(p, 0, -1);
         } else {
-          // if fullPath dont start with public/ add it
-          if (!fullPath.startsWith("public/")) {
-            fullPath = "public/".concat(fullPath);
+          try {
+            Uri uri = Uri.parse(fullPath); // Now Uri class should be recognized
+            if (
+              uri.getScheme() != null &&
+              (
+                uri.getScheme().equals("http") ||
+                uri.getScheme().equals("https")
+              )
+            ) {
+              // It's a remote URL
+              RemoteAudioAsset remoteAudioAsset = new RemoteAudioAsset(
+                this,
+                audioId,
+                uri,
+                audioChannelNum,
+                (float) volume
+              );
+              audioAssetList.put(audioId, remoteAudioAsset);
+              call.resolve(status);
+              return;
+            } else {
+              // It's a local file path
+              // Check if fullPath starts with "public/" and prepend if necessary
+              if (!fullPath.startsWith("public/")) {
+                fullPath = "public/".concat(fullPath);
+              }
+              Context ctx = getContext().getApplicationContext(); // Use getContext() directly
+              AssetManager am = ctx.getResources().getAssets();
+              // Remove the redefinition of assetFileDescriptor
+              assetFileDescriptor = am.openFd(fullPath);
+            }
+          } catch (Exception e) {
+            call.reject("Error loading audio", e);
+            return;
           }
-          Context ctx = (Application) this.getContext().getApplicationContext();
-          AssetManager am = ctx.getResources().getAssets();
-          assetFileDescriptor = am.openFd(fullPath);
         }
 
         AudioAsset asset = new AudioAsset(
@@ -483,8 +514,6 @@ public class NativeAudio
         );
         audioAssetList.put(audioId, asset);
 
-        JSObject status = new JSObject();
-        status.put("STATUS", "OK");
         call.resolve(status);
       } else {
         call.reject(ERROR_AUDIO_EXISTS);

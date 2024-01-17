@@ -75,7 +75,7 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
             player = channels[playIndex]
             player.currentTime = time
             player.numberOfLoops = 0
-            if (delay > 0) {
+            if delay > 0 {
                 player.play(atTime: player.deviceCurrentTime + delay)
             } else {
                 player.play()

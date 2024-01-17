@@ -260,7 +260,7 @@ public class NativeAudio: CAPPlugin {
         let channels: Int?
         let volume: Float?
         let delay: Float?
-        let isUrl: Bool?
+        var isLocalUrl: Bool = call.getBool("isUrl") ?? false // Existing flag for local URLs
 
         if audioId != "" {
             var assetPath: String = call.getString(Constant.AssetPathKey) ?? ""
@@ -269,12 +269,11 @@ public class NativeAudio: CAPPlugin {
                 volume = call.getFloat("volume") ?? 1.0
                 channels = call.getInt("channels") ?? 1
                 delay = call.getFloat("delay") ?? 1.0
-                isUrl = call.getBool("isUrl") ?? false
             } else {
                 channels = 0
                 volume = 0
                 delay = 0
-                isUrl = false
+                isLocalUrl = false
             }
 
             if audioList.isEmpty {
@@ -286,7 +285,12 @@ public class NativeAudio: CAPPlugin {
             queue.async {
                 if asset == nil {
                     var basePath: String?
-                    if isUrl == false {
+                    if let url = URL(string: assetPath), url.scheme != nil {
+                        // Handle remote URL
+                        let remoteAudioAsset = RemoteAudioAsset(owner: self, withAssetId: audioId, withPath: assetPath, withChannels: channels, withVolume: volume, withFadeDelay: delay)
+                        self.audioList[audioId] = remoteAudioAsset
+                        call.resolve()
+                    } else if isLocalUrl == false {
                         // if assetPath dont start with public/ add it
                         assetPath = assetPath.starts(with: "public/") ? assetPath : "public/" + assetPath
 
