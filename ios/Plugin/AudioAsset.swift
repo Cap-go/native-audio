@@ -32,6 +32,7 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
         for _ in 0..<channels {
             do {
                 let player: AVAudioPlayer! = try AVAudioPlayer(contentsOf: pathUrl)
+                player.delegate = owner
 
                 if player != nil {
                     player.enableRate = true

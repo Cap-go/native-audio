@@ -10,7 +10,7 @@ enum MyError: Error {
 /// Please read the Capacitor iOS Plugin Development Guide
 /// here: https://capacitor.ionicframework.com/docs/plugins/ios
 @objc(NativeAudio)
-public class NativeAudio: CAPPlugin {
+public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
 
     var audioList: [String: Any] = [:]
     var fadeMusic = false
@@ -101,6 +101,26 @@ public class NativeAudio: CAPPlugin {
         preloadAsset(call, isComplex: true)
     }
 
+    func activateSession() {
+        do {
+            try self.session.setActive(true)
+        } catch {
+            print("Failed to set session active")
+        }
+    }
+
+    func endSession() {
+        do {
+            try self.session.setActive(false, options: .notifyOthersOnDeactivation)
+        } catch {
+            print("Failed to deactivate audio session")
+        }
+    }
+
+    public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        self.endSession()
+    }
+
     @objc func play(_ call: CAPPluginCall) {
         let audioId = call.getString(Constant.AssetIdKey) ?? ""
         let time = call.getDouble("time") ?? 0
@@ -115,7 +135,7 @@ public class NativeAudio: CAPPlugin {
                     if asset != nil {
                         if asset is AudioAsset {
                             let audioAsset = asset as? AudioAsset
-
+                            self.activateSession()
                             if self.fadeMusic {
                                 audioAsset?.playWithFade(time: time)
                             } else {
@@ -124,6 +144,7 @@ public class NativeAudio: CAPPlugin {
                             call.resolve()
                         } else if asset is Int32 {
                             let audioAsset = asset as? NSNumber ?? 0
+                            self.activateSession()
                             AudioServicesPlaySystemSound(SystemSoundID(audioAsset.intValue))
                             call.resolve()
                         } else {
@@ -175,7 +196,7 @@ public class NativeAudio: CAPPlugin {
         guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
             return
         }
-
+        self.activateSession()
         audioAsset.resume()
         call.resolve()
     }
@@ -186,6 +207,7 @@ public class NativeAudio: CAPPlugin {
         }
 
         audioAsset.pause()
+        self.endSession()
         call.resolve()
     }
 
@@ -194,6 +216,7 @@ public class NativeAudio: CAPPlugin {
 
         do {
             try stopAudio(audioId: audioId)
+            self.endSession()
         } catch {
             call.reject(Constant.ErrorAssetNotFound)
         }
