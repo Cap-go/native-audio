@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.2.1](https://github.com/Cap-go/native-audio/compare/6.2.0...6.2.1) (2024-01-18)
+
+
+### Bug Fixes
+
+* session focus issue ([b2e002c](https://github.com/Cap-go/native-audio/commit/b2e002cb7de878311453e90ddc645f77529a338f))
+
 ## [6.2.0](https://github.com/Cap-go/native-audio/compare/6.1.36...6.2.0) (2024-01-17)
 
 
