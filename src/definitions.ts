@@ -37,8 +37,8 @@ export interface NativeAudio {
    */
   addListener(
     eventName: "complete",
-    listenerFunc: CompletedListener
-  ): Promise<PluginListenerHandle> & PluginListenerHandle;
+    listenerFunc: CompletedListener,
+  ): Promise<PluginListenerHandle>;
 }
 
 export interface ConfigureOptions {
