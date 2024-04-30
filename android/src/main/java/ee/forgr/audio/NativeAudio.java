@@ -57,8 +57,8 @@ public class NativeAudio
   public void load() {
     super.load();
 
-    this.audioManager =
-      (AudioManager) this.getActivity().getSystemService(Context.AUDIO_SERVICE);
+    this.audioManager = (AudioManager) this.getActivity()
+      .getSystemService(Context.AUDIO_SERVICE);
   }
 
   @Override
@@ -74,7 +74,10 @@ public class NativeAudio
 
     try {
       if (audioAssetList != null) {
-        for (HashMap.Entry<String, AudioAsset> entry : audioAssetList.entrySet()) {
+        for (HashMap.Entry<
+          String,
+          AudioAsset
+        > entry : audioAssetList.entrySet()) {
           AudioAsset audio = entry.getValue();
 
           if (audio != null) {
@@ -122,8 +125,9 @@ public class NativeAudio
   public void configure(PluginCall call) {
     initSoundPool();
 
-    if (call.hasOption(OPT_FADE_MUSIC)) this.fadeMusic =
-      call.getBoolean(OPT_FADE_MUSIC);
+    if (call.hasOption(OPT_FADE_MUSIC)) this.fadeMusic = call.getBoolean(
+      OPT_FADE_MUSIC
+    );
 
     if (call.hasOption(OPT_FOCUS_AUDIO) && this.audioManager != null) {
       if (call.getBoolean(OPT_FOCUS_AUDIO)) {
@@ -148,8 +152,7 @@ public class NativeAudio
           preloadAsset(call);
         }
       }
-    )
-      .start();
+    ).start();
   }
 
   @PluginMethod
@@ -472,10 +475,8 @@ public class NativeAudio
             Uri uri = Uri.parse(fullPath); // Now Uri class should be recognized
             if (
               uri.getScheme() != null &&
-              (
-                uri.getScheme().equals("http") ||
-                uri.getScheme().equals("https")
-              )
+              (uri.getScheme().equals("http") ||
+                uri.getScheme().equals("https"))
             ) {
               // It's a remote URL
               RemoteAudioAsset remoteAudioAsset = new RemoteAudioAsset(

@@ -72,7 +72,7 @@ export class NativeAudioWeb extends WebPlugin implements NativeAudio {
     }
     NativeAudioWeb.AUDIO_ASSET_BY_ASSET_ID.set(
       options.assetId,
-      new AudioAsset(audio)
+      new AudioAsset(audio),
     );
   }
 
