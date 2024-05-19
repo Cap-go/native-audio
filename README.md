@@ -113,7 +113,7 @@ import {NativeAudio} from '@capgo/native-audio'
 
 /**
  * This method will load more optimized audio files for background into memory.
- * @param assetPath - relative path of the file or absolute url (file://)
+ * @param assetPath - relative path of the file or absolute url (file://) or remote URL (https://)
  *        assetId - unique identifier of the file
  *        audioChannelNum - number of audio channels
  *        isUrl - pass true if assetPath is a `file://` url
