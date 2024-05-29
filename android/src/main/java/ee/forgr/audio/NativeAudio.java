@@ -59,6 +59,8 @@ public class NativeAudio
 
     this.audioManager = (AudioManager) this.getActivity()
       .getSystemService(Context.AUDIO_SERVICE);
+
+    audioAssetList = new HashMap<>();
   }
 
   @Override
