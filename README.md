@@ -6,8 +6,8 @@
 </a>
 
 <div align="center">
-  <h2><a href="https://capgo.app/?ref=awesome-list"> ➡️ Get Instant updates for your App with Capgo 🚀</a></h2>
-  <h2><a href="https://capgo.app/consulting/"> Fix your annoying bug now, Hire a Capacitor expert 💪</a></h2>
+  <h2><a href="https://capgo.app/?ref=plugin"> ➡️ Get Instant updates for your App with Capgo 🚀</a></h2>
+  <h2><a href="https://capgo.app/consulting/?ref=plugin"> Fix your annoying bug now, Hire a Capacitor expert 💪</a></h2>
 </div>
 
 <h3 align="center">Native Audio</h3>
