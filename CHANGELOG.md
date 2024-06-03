@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.4.2](https://github.com/Cap-go/native-audio/compare/6.4.1...6.4.2) (2024-06-03)
+
+
+### Bug Fixes
+
+* add better header for consulting and capgo ([7d93625](https://github.com/Cap-go/native-audio/commit/7d93625f266cf56e4ea450268ee370f55409a504))
+
 ### [6.4.1](https://github.com/Cap-go/native-audio/compare/6.4.0...6.4.1) (2024-06-03)
 
 
