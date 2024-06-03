@@ -6,6 +6,7 @@
 CAP_PLUGIN(NativeAudio, "NativeAudio",
              CAP_PLUGIN_METHOD(configure, CAPPluginReturnPromise);
              CAP_PLUGIN_METHOD(preload, CAPPluginReturnPromise);
+             CAP_PLUGIN_METHOD(isPreloaded, CAPPluginReturnPromise);
              CAP_PLUGIN_METHOD(play, CAPPluginReturnPromise);
              CAP_PLUGIN_METHOD(stop, CAPPluginReturnPromise);
              CAP_PLUGIN_METHOD(loop, CAPPluginReturnPromise);

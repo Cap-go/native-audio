@@ -3,18 +3,16 @@ package ee.forgr.audio;
 import android.content.res.AssetFileDescriptor;
 import android.os.Build;
 import androidx.annotation.RequiresApi;
-import com.getcapacitor.JSObject;
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
 
 public class AudioAsset {
 
   private final String TAG = "AudioAsset";
 
-  private ArrayList<AudioDispatcher> audioList;
+  private final ArrayList<AudioDispatcher> audioList;
   private int playIndex = 0;
-  private String assetId;
-  private NativeAudio owner;
+  private final String assetId;
+  private final NativeAudio owner;
 
   AudioAsset(
     NativeAudio owner,
@@ -91,7 +89,7 @@ public class AudioAsset {
   }
 
   public void resume() throws Exception {
-    if (audioList.size() > 0) {
+    if (!audioList.isEmpty()) {
       AudioDispatcher audio = audioList.get(0);
 
       if (audio != null) {

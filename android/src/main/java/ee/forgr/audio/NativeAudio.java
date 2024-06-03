@@ -9,13 +9,11 @@ import static ee.forgr.audio.Constant.ERROR_AUDIO_ASSET_MISSING;
 import static ee.forgr.audio.Constant.ERROR_AUDIO_EXISTS;
 import static ee.forgr.audio.Constant.ERROR_AUDIO_ID_MISSING;
 import static ee.forgr.audio.Constant.LOOP;
-import static ee.forgr.audio.Constant.OPT_FADE_MUSIC;
 import static ee.forgr.audio.Constant.OPT_FOCUS_AUDIO;
 import static ee.forgr.audio.Constant.RATE;
 import static ee.forgr.audio.Constant.VOLUME;
 
 import android.Manifest;
-import android.app.Application;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
@@ -50,7 +48,6 @@ public class NativeAudio
 
   private static HashMap<String, AudioAsset> audioAssetList;
   private static ArrayList<AudioAsset> resumeList;
-  private boolean fadeMusic = false;
   private AudioManager audioManager;
 
   @Override
@@ -125,22 +122,43 @@ public class NativeAudio
   public void configure(PluginCall call) {
     initSoundPool();
 
-    if (call.hasOption(OPT_FADE_MUSIC)) this.fadeMusic = call.getBoolean(
-      OPT_FADE_MUSIC
-    );
+    if (this.audioManager == null) {
+      call.resolve();
+      return;
+    }
 
-    if (call.hasOption(OPT_FOCUS_AUDIO) && this.audioManager != null) {
-      if (call.getBoolean(OPT_FOCUS_AUDIO)) {
-        this.audioManager.requestAudioFocus(
-            this,
-            AudioManager.STREAM_MUSIC,
-            AudioManager.AUDIOFOCUS_GAIN
-          );
-      } else {
-        this.audioManager.abandonAudioFocus(this);
-      }
+    if (Boolean.TRUE.equals(call.getBoolean(OPT_FOCUS_AUDIO, false))) {
+      this.audioManager.requestAudioFocus(
+          this,
+          AudioManager.STREAM_MUSIC,
+          AudioManager.AUDIOFOCUS_GAIN
+        );
+    } else {
+      this.audioManager.abandonAudioFocus(this);
     }
     call.resolve();
+  }
+
+  @PluginMethod
+  public void isPreloaded(final PluginCall call) {
+    new Thread(
+      new Runnable() {
+        @Override
+        public void run() {
+          initSoundPool();
+
+          String audioId = call.getString(ASSET_ID);
+
+          if (!isStringValid(audioId)) {
+            call.reject(ERROR_AUDIO_ID_MISSING + " - " + audioId);
+            return;
+          }
+          call.resolve(
+            new JSObject().put("found", audioAssetList.containsKey(audioId))
+          );
+        }
+      }
+    ).start();
   }
 
   @PluginMethod
@@ -348,7 +366,7 @@ public class NativeAudio
       initSoundPool();
 
       String audioId = call.getString(ASSET_ID);
-      float volume = call.getFloat(VOLUME);
+      float volume = call.getFloat(VOLUME, 1F);
 
       if (audioAssetList.containsKey(audioId)) {
         AudioAsset asset = audioAssetList.get(audioId);
@@ -372,7 +390,7 @@ public class NativeAudio
       initSoundPool();
 
       String audioId = call.getString(ASSET_ID);
-      float rate = call.getFloat(RATE);
+      float rate = call.getFloat(RATE, 1F);
 
       if (audioAssetList.containsKey(audioId)) {
         AudioAsset asset = audioAssetList.get(audioId);
@@ -421,7 +439,7 @@ public class NativeAudio
   }
 
   private void preloadAsset(PluginCall call) {
-    double volume = 1.0;
+    float volume = 1F;
     int audioChannelNum = 1;
     JSObject status = new JSObject();
     status.put("STATUS", "OK");
@@ -450,17 +468,8 @@ public class NativeAudio
 
         String fullPath = assetPath; //"raw/".concat(assetPath);
 
-        if (call.getDouble(VOLUME) == null) {
-          volume = 1.0;
-        } else {
-          volume = call.getDouble(VOLUME, 0.5);
-        }
-
-        if (call.getInt(AUDIO_CHANNEL_NUM) == null) {
-          audioChannelNum = 1;
-        } else {
-          audioChannelNum = call.getInt(AUDIO_CHANNEL_NUM);
-        }
+        volume = call.getFloat(VOLUME, 1F);
+        audioChannelNum = call.getInt(AUDIO_CHANNEL_NUM, 1);
 
         AssetFileDescriptor assetFileDescriptor;
         if (isLocalUrl) {
@@ -484,7 +493,7 @@ public class NativeAudio
                 audioId,
                 uri,
                 audioChannelNum,
-                (float) volume
+                volume
               );
               audioAssetList.put(audioId, remoteAudioAsset);
               call.resolve(status);
@@ -511,7 +520,7 @@ public class NativeAudio
           audioId,
           assetFileDescriptor,
           audioChannelNum,
-          (float) volume
+          volume
         );
         audioAssetList.put(audioId, asset);
 

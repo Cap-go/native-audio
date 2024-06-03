@@ -17,4 +17,11 @@ public class Constant {
   public static final String RATE = "rate";
   public static final String AUDIO_CHANNEL_NUM = "audioChannelNum";
   public static final String LOOP = "loop";
+  public static final int INVALID = 0;
+  public static final int PREPARED = 1;
+  public static final int PENDING_PLAY = 2;
+  public static final int PLAYING = 3;
+  public static final int PENDING_LOOP = 4;
+  public static final int LOOPING = 5;
+  public static final int PAUSE = 6;
 }

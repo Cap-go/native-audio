@@ -97,6 +97,16 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
         call.resolve()
     }
 
+    @objc func isPreloaded(_ call: CAPPluginCall) {
+        guard let assetId = call.getString(Constant.AssetIdKey) else {
+            call.reject("Missing assetId")
+            return
+        }
+        call.resolve([
+            "found": self.audioList[assetId] != nil
+        ])
+    }
+
     @objc func preload(_ call: CAPPluginCall) {
         preloadAsset(call, isComplex: true)
     }

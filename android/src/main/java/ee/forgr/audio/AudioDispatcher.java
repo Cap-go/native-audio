@@ -1,11 +1,18 @@
 package ee.forgr.audio;
 
+import static ee.forgr.audio.Constant.INVALID;
+import static ee.forgr.audio.Constant.LOOPING;
+import static ee.forgr.audio.Constant.PAUSE;
+import static ee.forgr.audio.Constant.PENDING_LOOP;
+import static ee.forgr.audio.Constant.PENDING_PLAY;
+import static ee.forgr.audio.Constant.PLAYING;
+import static ee.forgr.audio.Constant.PREPARED;
+
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.util.Log;
-import java.util.concurrent.Callable;
 
 public class AudioDispatcher
   implements
@@ -14,16 +21,7 @@ public class AudioDispatcher
     MediaPlayer.OnSeekCompleteListener {
 
   private final String TAG = "AudioDispatcher";
-
-  private final int INVALID = 0;
-  private final int PREPARED = 1;
-  private final int PENDING_PLAY = 2;
-  private final int PLAYING = 3;
-  private final int PENDING_LOOP = 4;
-  private final int LOOPING = 5;
-  private final int PAUSE = 6;
-
-  private MediaPlayer mediaPlayer;
+  private final MediaPlayer mediaPlayer;
   private int mediaState;
   private AudioAsset owner;
 
@@ -63,7 +61,7 @@ public class AudioDispatcher
   }
 
   public void play(Double time) throws Exception {
-    invokePlay(time, false);
+    invokePlay(time);
   }
 
   public boolean pause() throws Exception {
@@ -159,23 +157,23 @@ public class AudioDispatcher
     }
   }
 
-  private void invokePlay(Double time, Boolean loop) {
+  private void invokePlay(Double time) {
     try {
       boolean playing = mediaPlayer.isPlaying();
 
       if (playing) {
         mediaPlayer.pause();
-        mediaPlayer.setLooping(loop);
+        mediaPlayer.setLooping(false);
         mediaState = PENDING_PLAY;
         seek(time);
       } else {
         if (mediaState == PREPARED) {
-          mediaState = (loop ? PENDING_LOOP : PENDING_PLAY);
+          mediaState = (PENDING_PLAY);
           onPrepared(mediaPlayer);
           seek(time);
         } else {
-          mediaState = (loop ? PENDING_LOOP : PENDING_PLAY);
-          mediaPlayer.setLooping(loop);
+          mediaState = (PENDING_PLAY);
+          mediaPlayer.setLooping(false);
           seek(time);
         }
       }
