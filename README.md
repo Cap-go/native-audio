@@ -34,7 +34,7 @@
 # Capacitor Native Audio Plugin
 
 Capacitor plugin for native audio engine.
-Capacitor V5 - ✅ Support!
+Capacitor V6 - ✅ Support!
 
 Click on video to see example 💥
 
