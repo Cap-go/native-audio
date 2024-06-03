@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.4.0](https://github.com/Cap-go/native-audio/compare/6.3.4...6.4.0) (2024-06-03)
+
+
+### Features
+
+* add isPreload + lint issue ([cb63909](https://github.com/Cap-go/native-audio/commit/cb63909c12703675a7f198ff421e01c2511a4406))
+* add isPreload + lint issue ([ac6c167](https://github.com/Cap-go/native-audio/commit/ac6c167b6eef3cc235d68e06a786d40c18497917))
+
 ### [6.3.4](https://github.com/Cap-go/native-audio/compare/6.3.3...6.3.4) (2024-05-19)
 
 ### [6.3.3](https://github.com/Cap-go/native-audio/compare/6.3.2...6.3.3) (2024-05-19)
