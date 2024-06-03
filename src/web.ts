@@ -49,6 +49,14 @@ export class NativeAudioWeb extends WebPlugin implements NativeAudio {
     throw `configure is not supported for web: ${JSON.stringify(options)}`;
   }
 
+  async isPreloaded(options: PreloadOptions): Promise<boolean> {
+    try {
+      return !!this.getAudioAsset(options.assetId);
+    } catch (e) {
+      return false;
+    }
+  }
+
   async preload(options: PreloadOptions): Promise<void> {
     if (NativeAudioWeb.AUDIO_ASSET_BY_ASSET_ID.has(options.assetId)) {
       throw "AssetId already exists. Unload first if like to change!";
