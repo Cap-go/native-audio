@@ -168,7 +168,7 @@ NativeAudio.unload({
 /**
  * This method will set the new volume for a audio file.
  * @param assetId - identifier of the asset
- *        volume - numerical value of the volume between 0.1 - 1.0
+ *        volume - numerical value of the volume between 0.1 - 1.0 default 1.0
  * @returns void
  */
 NativeAudio.setVolume({
@@ -224,9 +224,13 @@ NativeAudio.isPlaying({
 configure(options: ConfigureOptions) => Promise<void>
 ```
 
+Configure the audio player
+
 | Param         | Type                                                          |
 | ------------- | ------------------------------------------------------------- |
 | **`options`** | <code><a href="#configureoptions">ConfigureOptions</a></code> |
+
+**Since:** 5.0.0
 
 ---
 
@@ -236,9 +240,13 @@ configure(options: ConfigureOptions) => Promise<void>
 preload(options: PreloadOptions) => Promise<void>
 ```
 
+Load an audio file
+
 | Param         | Type                                                      |
 | ------------- | --------------------------------------------------------- |
 | **`options`** | <code><a href="#preloadoptions">PreloadOptions</a></code> |
+
+**Since:** 5.0.0
 
 ---
 
@@ -248,9 +256,13 @@ preload(options: PreloadOptions) => Promise<void>
 play(options: { assetId: string; time?: number; delay?: number; }) => Promise<void>
 ```
 
+Play an audio file
+
 | Param         | Type                                                             |
 | ------------- | ---------------------------------------------------------------- |
 | **`options`** | <code>{ assetId: string; time?: number; delay?: number; }</code> |
+
+**Since:** 5.0.0
 
 ---
 
@@ -260,9 +272,13 @@ play(options: { assetId: string; time?: number; delay?: number; }) => Promise<vo
 pause(options: { assetId: string; }) => Promise<void>
 ```
 
+Pause an audio file
+
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
+
+**Since:** 5.0.0
 
 ---
 
@@ -272,9 +288,13 @@ pause(options: { assetId: string; }) => Promise<void>
 resume(options: { assetId: string; }) => Promise<void>
 ```
 
+Resume an audio file
+
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
+
+**Since:** 5.0.0
 
 ---
 
@@ -284,9 +304,13 @@ resume(options: { assetId: string; }) => Promise<void>
 loop(options: { assetId: string; }) => Promise<void>
 ```
 
+Stop an audio file
+
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
+
+**Since:** 5.0.0
 
 ---
 
@@ -296,9 +320,13 @@ loop(options: { assetId: string; }) => Promise<void>
 stop(options: { assetId: string; }) => Promise<void>
 ```
 
+Stop an audio file
+
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
+
+**Since:** 5.0.0
 
 ---
 
@@ -308,9 +336,13 @@ stop(options: { assetId: string; }) => Promise<void>
 unload(options: { assetId: string; }) => Promise<void>
 ```
 
+Unload an audio file
+
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
+
+**Since:** 5.0.0
 
 ---
 
@@ -320,9 +352,13 @@ unload(options: { assetId: string; }) => Promise<void>
 setVolume(options: { assetId: string; volume: number; }) => Promise<void>
 ```
 
+Set the volume of an audio file
+
 | Param         | Type                                              |
 | ------------- | ------------------------------------------------- |
 | **`options`** | <code>{ assetId: string; volume: number; }</code> |
+
+**Since:** 5.0.0
 
 ---
 
@@ -332,9 +368,13 @@ setVolume(options: { assetId: string; volume: number; }) => Promise<void>
 setRate(options: { assetId: string; rate: number; }) => Promise<void>
 ```
 
+Set the rate of an audio file
+
 | Param         | Type                                            |
 | ------------- | ----------------------------------------------- |
 | **`options`** | <code>{ assetId: string; rate: number; }</code> |
+
+**Since:** 5.0.0
 
 ---
 
@@ -344,11 +384,15 @@ setRate(options: { assetId: string; rate: number; }) => Promise<void>
 getCurrentTime(options: { assetId: string; }) => Promise<{ currentTime: number; }>
 ```
 
+Set the current time of an audio file
+
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
 
 **Returns:** <code>Promise&lt;{ currentTime: number; }&gt;</code>
+
+**Since:** 5.0.0
 
 ---
 
@@ -358,11 +402,15 @@ getCurrentTime(options: { assetId: string; }) => Promise<{ currentTime: number; 
 getDuration(options: { assetId: string; }) => Promise<{ duration: number; }>
 ```
 
+Get the duration of an audio file
+
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
 
 **Returns:** <code>Promise&lt;{ duration: number; }&gt;</code>
+
+**Since:** 5.0.0
 
 ---
 
@@ -372,11 +420,15 @@ getDuration(options: { assetId: string; }) => Promise<{ duration: number; }>
 isPlaying(options: { assetId: string; }) => Promise<{ isPlaying: boolean; }>
 ```
 
+Check if an audio file is playing
+
 | Param         | Type                              |
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ assetId: string; }</code> |
 
 **Returns:** <code>Promise&lt;{ isPlaying: boolean; }&gt;</code>
+
+**Since:** 5.0.0
 
 ---
 
@@ -396,6 +448,7 @@ Listen for complete event
 **Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
 **Since:** 5.0.0
+return CompletedEvent
 
 ---
 
