@@ -39,6 +39,7 @@ export class NativeAudioWeb extends WebPlugin implements NativeAudio {
     if (Number.isNaN(audio.duration)) {
       throw "no duration available";
     }
+    this.notifyListeners;
     if (!Number.isFinite(audio.duration)) {
       throw "duration not available => media resource is streaming";
     }
@@ -83,12 +84,18 @@ export class NativeAudioWeb extends WebPlugin implements NativeAudio {
       new AudioAsset(audio),
     );
   }
+  private onEnded(event: Event): void {
+    const audio: HTMLAudioElement = event.target as HTMLAudioElement;
+    this.notifyListeners("complete", { assetId: audio.id });
+  }
 
   async play(options: { assetId: string; time?: number }): Promise<void> {
     const audio: HTMLAudioElement = this.getAudioAsset(options.assetId).audio;
     await this.stop(options);
     audio.loop = false;
     audio.currentTime = options.time ?? 0;
+    audio.removeEventListener("ended", this.onEnded);
+    audio.addEventListener("ended", this.onEnded);
     return audio.play();
   }
 
