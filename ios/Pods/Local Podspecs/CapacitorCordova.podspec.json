@@ -21,7 +21,9 @@
     "CapacitorCordova/CapacitorCordova/CapacitorCordova.h"
   ],
   "module_map": "CapacitorCordova/CapacitorCordova/CapacitorCordova.modulemap",
-  "resources": ["CapacitorCordova/CapacitorCordova/PrivacyInfo.xcprivacy"],
+  "resources": [
+    "CapacitorCordova/CapacitorCordova/PrivacyInfo.xcprivacy"
+  ],
   "requires_arc": true,
   "frameworks": "WebKit"
 }

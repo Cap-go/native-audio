@@ -12,7 +12,7 @@ public class AudioAsset {
   private final ArrayList<AudioDispatcher> audioList;
   private int playIndex = 0;
   private final String assetId;
-  private final NativeAudio owner;
+  protected final NativeAudio owner;
 
   AudioAsset(
     NativeAudio owner,

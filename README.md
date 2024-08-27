@@ -80,8 +80,9 @@ On iOS, Android and Web, no further steps are needed.
 
 No configuration required for this plugin.
 <docgen-config>
-
 <!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
+
+
 
 </docgen-config>
 
@@ -231,7 +232,8 @@ Configure the audio player
 
 **Since:** 5.0.0
 
----
+--------------------
+
 
 ### preload(...)
 
@@ -247,7 +249,8 @@ Load an audio file
 
 **Since:** 5.0.0
 
----
+--------------------
+
 
 ### isPreloaded(...)
 
@@ -265,7 +268,8 @@ Check if an audio file is preloaded
 
 **Since:** 6.1.0
 
----
+--------------------
+
 
 ### play(...)
 
@@ -281,7 +285,8 @@ Play an audio file
 
 **Since:** 5.0.0
 
----
+--------------------
+
 
 ### pause(...)
 
@@ -297,7 +302,8 @@ Pause an audio file
 
 **Since:** 5.0.0
 
----
+--------------------
+
 
 ### resume(...)
 
@@ -313,7 +319,8 @@ Resume an audio file
 
 **Since:** 5.0.0
 
----
+--------------------
+
 
 ### loop(...)
 
@@ -329,7 +336,8 @@ Stop an audio file
 
 **Since:** 5.0.0
 
----
+--------------------
+
 
 ### stop(...)
 
@@ -345,7 +353,8 @@ Stop an audio file
 
 **Since:** 5.0.0
 
----
+--------------------
+
 
 ### unload(...)
 
@@ -361,7 +370,8 @@ Unload an audio file
 
 **Since:** 5.0.0
 
----
+--------------------
+
 
 ### setVolume(...)
 
@@ -377,7 +387,8 @@ Set the volume of an audio file
 
 **Since:** 5.0.0
 
----
+--------------------
+
 
 ### setRate(...)
 
@@ -393,7 +404,8 @@ Set the rate of an audio file
 
 **Since:** 5.0.0
 
----
+--------------------
+
 
 ### getCurrentTime(...)
 
@@ -411,7 +423,8 @@ Set the current time of an audio file
 
 **Since:** 5.0.0
 
----
+--------------------
+
 
 ### getDuration(...)
 
@@ -429,7 +442,8 @@ Get the duration of an audio file
 
 **Since:** 5.0.0
 
----
+--------------------
+
 
 ### isPlaying(...)
 
@@ -447,7 +461,8 @@ Check if an audio file is playing
 
 **Since:** 5.0.0
 
----
+--------------------
+
 
 ### addListener('complete', ...)
 
@@ -467,9 +482,11 @@ Listen for complete event
 **Since:** 5.0.0
 return {@link CompletedEvent}
 
----
+--------------------
+
 
 ### Interfaces
+
 
 #### ConfigureOptions
 
@@ -478,6 +495,7 @@ return {@link CompletedEvent}
 | **`fade`**       | <code>boolean</code> | Play the audio with Fade effect, only available for IOS |
 | **`focus`**      | <code>boolean</code> | focus the audio with Audio Focus                        |
 | **`background`** | <code>boolean</code> | Play the audio in the background                        |
+
 
 #### PreloadOptions
 
@@ -489,11 +507,13 @@ return {@link CompletedEvent}
 | **`audioChannelNum`** | <code>number</code>  | Audio channel number, default is 1                                                                 |
 | **`isUrl`**           | <code>boolean</code> | Is the audio file a URL, pass true if assetPath is a `file://` url                                 |
 
+
 #### Assets
 
 | Prop          | Type                | Description                             |
 | ------------- | ------------------- | --------------------------------------- |
 | **`assetId`** | <code>string</code> | Asset Id, unique identifier of the file |
+
 
 #### PluginListenerHandle
 
@@ -501,13 +521,16 @@ return {@link CompletedEvent}
 | ------------ | ----------------------------------------- |
 | **`remove`** | <code>() =&gt; Promise&lt;void&gt;</code> |
 
+
 #### CompletedEvent
 
 | Prop          | Type                | Description                | Since |
 | ------------- | ------------------- | -------------------------- | ----- |
 | **`assetId`** | <code>string</code> | Emit when a play completes | 5.0.0 |
 
+
 ### Type Aliases
+
 
 #### CompletedListener
 

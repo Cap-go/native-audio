@@ -29,7 +29,11 @@ import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 import com.getcapacitor.annotation.Permission;
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -448,88 +452,132 @@ public class NativeAudio
       initSoundPool();
 
       String audioId = call.getString(ASSET_ID);
-
-      boolean isLocalUrl = Boolean.TRUE.equals(call.getBoolean("isUrl", false));
-
       if (!isStringValid(audioId)) {
         call.reject(ERROR_AUDIO_ID_MISSING + " - " + audioId);
         return;
       }
 
-      if (!audioAssetList.containsKey(audioId)) {
-        String assetPath = call.getString(ASSET_PATH);
+      String assetPath = call.getString(ASSET_PATH);
+      if (!isStringValid(assetPath)) {
+        call.reject(
+          ERROR_ASSET_PATH_MISSING + " - " + audioId + " - " + assetPath
+        );
+        return;
+      }
 
-        if (!isStringValid(assetPath)) {
-          call.reject(
-            ERROR_ASSET_PATH_MISSING + " - " + audioId + " - " + assetPath
-          );
-          return;
-        }
+      boolean isLocalUrl = call.getBoolean("isUrl", false);
+      boolean isComplex = call.getBoolean("isComplex", false);
 
-        String fullPath = assetPath; //"raw/".concat(assetPath);
+      Log.d(
+        "AudioPlugin",
+        "Debug: audioId = " +
+        audioId +
+        ", assetPath = " +
+        assetPath +
+        ", isLocalUrl = " +
+        isLocalUrl
+      );
 
+      if (audioAssetList.containsKey(audioId)) {
+        call.reject(ERROR_AUDIO_EXISTS + " - " + audioId);
+        return;
+      }
+
+      if (isComplex) {
         volume = call.getFloat(VOLUME, 1F);
         audioChannelNum = call.getInt(AUDIO_CHANNEL_NUM, 1);
+      }
 
-        AssetFileDescriptor assetFileDescriptor;
-        if (isLocalUrl) {
-          File f = new File(new URI(fullPath));
-          ParcelFileDescriptor p = ParcelFileDescriptor.open(
-            f,
-            ParcelFileDescriptor.MODE_READ_ONLY
-          );
-          assetFileDescriptor = new AssetFileDescriptor(p, 0, -1);
-        } else {
-          try {
-            Uri uri = Uri.parse(fullPath); // Now Uri class should be recognized
-            if (
-              uri.getScheme() != null &&
-              (uri.getScheme().equals("http") ||
-                uri.getScheme().equals("https"))
-            ) {
-              // It's a remote URL
-              RemoteAudioAsset remoteAudioAsset = new RemoteAudioAsset(
-                this,
-                audioId,
-                uri,
-                audioChannelNum,
-                volume
+      if (isLocalUrl) {
+        // Handle URL (both remote and local file URLs)
+        Log.d("AudioPlugin", "Debug: Handling URL");
+        try {
+          Uri uri = Uri.parse(assetPath);
+          if (
+            uri.getScheme() != null &&
+            (uri.getScheme().equals("http") || uri.getScheme().equals("https"))
+          ) {
+            // Remote URL
+            Log.d(
+              "AudioPlugin",
+              "Debug: Remote URL detected: " + uri.toString()
+            );
+            RemoteAudioAsset remoteAudioAsset = new RemoteAudioAsset(
+              this,
+              audioId,
+              uri,
+              audioChannelNum,
+              volume
+            );
+            audioAssetList.put(audioId, remoteAudioAsset);
+          } else if (
+            uri.getScheme() != null && uri.getScheme().equals("file")
+          ) {
+            // Local file URL
+            Log.d("AudioPlugin", "Debug: Local file URL detected");
+            File file = new File(uri.getPath());
+            if (!file.exists()) {
+              Log.e(
+                "AudioPlugin",
+                "Error: File does not exist - " + file.getAbsolutePath()
               );
-              audioAssetList.put(audioId, remoteAudioAsset);
-              call.resolve(status);
+              call.reject(ERROR_ASSET_PATH_MISSING + " - " + assetPath);
               return;
-            } else {
-              // It's a local file path
-              // Check if fullPath starts with "public/" and prepend if necessary
-              if (!fullPath.startsWith("public/")) {
-                fullPath = "public/".concat(fullPath);
-              }
-              Context ctx = getContext().getApplicationContext(); // Use getContext() directly
-              AssetManager am = ctx.getResources().getAssets();
-              // Remove the redefinition of assetFileDescriptor
-              assetFileDescriptor = am.openFd(fullPath);
             }
-          } catch (Exception e) {
-            call.reject("Error loading audio", e);
-            return;
+            ParcelFileDescriptor pfd = ParcelFileDescriptor.open(
+              file,
+              ParcelFileDescriptor.MODE_READ_ONLY
+            );
+            AssetFileDescriptor afd = new AssetFileDescriptor(
+              pfd,
+              0,
+              AssetFileDescriptor.UNKNOWN_LENGTH
+            );
+            AudioAsset asset = new AudioAsset(
+              this,
+              audioId,
+              afd,
+              audioChannelNum,
+              volume
+            );
+            audioAssetList.put(audioId, asset);
+          } else {
+            throw new IllegalArgumentException(
+              "Invalid URL scheme: " + uri.getScheme()
+            );
           }
+          call.resolve(status);
+        } catch (Exception e) {
+          Log.e("AudioPlugin", "Error handling URL", e);
+          call.reject("Error handling URL: " + e.getMessage());
         }
-
-        AudioAsset asset = new AudioAsset(
-          this,
-          audioId,
-          assetFileDescriptor,
-          audioChannelNum,
-          volume
-        );
-        audioAssetList.put(audioId, asset);
-
-        call.resolve(status);
       } else {
-        call.reject(ERROR_AUDIO_EXISTS);
+        // Handle asset in public folder
+        Log.d("AudioPlugin", "Debug: Handling asset in public folder");
+        if (!assetPath.startsWith("public/")) {
+          assetPath = "public/" + assetPath;
+        }
+        try {
+          Context ctx = getContext().getApplicationContext();
+          AssetManager am = ctx.getResources().getAssets();
+          AssetFileDescriptor assetFileDescriptor = am.openFd(assetPath);
+          AudioAsset asset = new AudioAsset(
+            this,
+            audioId,
+            assetFileDescriptor,
+            audioChannelNum,
+            volume
+          );
+          audioAssetList.put(audioId, asset);
+          call.resolve(status);
+        } catch (IOException e) {
+          Log.e("AudioPlugin", "Error opening asset: " + assetPath, e);
+          call.reject(ERROR_ASSET_PATH_MISSING + " - " + assetPath);
+        }
       }
     } catch (Exception ex) {
-      call.reject(ex.getMessage());
+      Log.e("AudioPlugin", "Error in preloadAsset", ex);
+      call.reject("Error in preloadAsset: " + ex.getMessage());
     }
   }
 
