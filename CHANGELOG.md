@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.4.5](https://github.com/Cap-go/native-audio/compare/6.4.4...6.4.5) (2024-08-27)
+
+
+### Bug Fixes
+
+* ios local file path ([7d1a226](https://github.com/Cap-go/native-audio/commit/7d1a2261a6768f65c742a272f0d749961eadca8b))
+
 ### [6.4.4](https://github.com/Cap-go/native-audio/compare/6.4.3...6.4.4) (2024-06-07)
 
 
