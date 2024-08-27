@@ -4,7 +4,7 @@ export default {
     {
       file: 'dist/plugin.js',
       format: 'iife',
-      name: 'capacitorApp',
+      name: 'capacitorCapacitorNativeAudio',
       globals: {
         '@capacitor/core': 'capacitorExports',
       },
