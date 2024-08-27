@@ -293,7 +293,7 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
         let channels: Int?
         let volume: Float?
         let delay: Float?
-        var isLocalUrl: Bool = call.getBool("isUrl") ?? false // Existing flag for local URLs
+        var isLocalUrl: Bool = call.getBool("isUrl") ?? false
 
         if audioId != "" {
             var assetPath: String = call.getString(Constant.AssetPathKey) ?? ""
@@ -324,25 +324,27 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
                         self.audioList[audioId] = remoteAudioAsset
                         call.resolve()
                     } else if isLocalUrl == false {
-                        // if assetPath dont start with public/ add it
+                        // Handle public folder
+                        // if assetPath doesnt start with public/ add it
                         assetPath = assetPath.starts(with: "public/") ? assetPath : "public/" + assetPath
 
                         let assetPathSplit = assetPath.components(separatedBy: ".")
                         basePath = Bundle.main.path(forResource: assetPathSplit[0], ofType: assetPathSplit[1])
                     } else {
-                        let url = URL(string: assetPath)
-                        basePath = url!.path
+                        // Handle local file URL
+                        let fileURL = URL(fileURLWithPath: assetPath)
+                        basePath = fileURL.path
                     }
 
-                    if FileManager.default.fileExists(atPath: basePath ?? "") {
+                    if let basePath = basePath, FileManager.default.fileExists(atPath: basePath) {
                         if !complex {
-                            let soundFileUrl = URL(fileURLWithPath: basePath ?? "")
+                            let soundFileUrl = URL(fileURLWithPath: basePath)
                             var soundId = SystemSoundID()
                             AudioServicesCreateSystemSoundID(soundFileUrl as CFURL, &soundId)
                             self.audioList[audioId] = NSNumber(value: Int32(soundId))
                             call.resolve()
                         } else {
-                            let audioAsset: AudioAsset = AudioAsset(
+                            let audioAsset = AudioAsset(
                                 owner: self,
                                 withAssetId: audioId, withPath: basePath, withChannels: channels,
                                 withVolume: volume, withFadeDelay: delay)
@@ -350,7 +352,26 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
                             call.resolve()
                         }
                     } else {
-                        call.reject(Constant.ErrorAssetPath + " - " + assetPath)
+                        if FileManager.default.fileExists(atPath: assetPath) {
+                            // Use the original assetPath
+                            if !complex {
+                                let soundFileUrl = URL(fileURLWithPath: assetPath)
+                                var soundId = SystemSoundID()
+                                AudioServicesCreateSystemSoundID(soundFileUrl as CFURL, &soundId)
+                                self.audioList[audioId] = NSNumber(value: Int32(soundId))
+                                call.resolve()
+                            } else {
+                                let audioAsset = AudioAsset(
+                                    owner: self,
+                                    withAssetId: audioId, withPath: assetPath, withChannels: channels,
+                                    withVolume: volume, withFadeDelay: delay)
+                                self.audioList[audioId] = audioAsset
+                                call.resolve()
+                            }
+                        } else {
+                            let attributes = try? FileManager.default.attributesOfItem(atPath: assetPath)
+                            call.reject(Constant.ErrorAssetPath + " - " + assetPath)
+                        }
                     }
                 } else {
                     call.reject(Constant.ErrorAssetAlreadyLoaded + " - " + audioId)
