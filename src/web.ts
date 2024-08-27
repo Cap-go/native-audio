@@ -39,7 +39,6 @@ export class NativeAudioWeb extends WebPlugin implements NativeAudio {
     if (Number.isNaN(audio.duration)) {
       throw "no duration available";
     }
-    this.notifyListeners;
     if (!Number.isFinite(audio.duration)) {
       throw "duration not available => media resource is streaming";
     }
