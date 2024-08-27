@@ -93,8 +93,7 @@ export class NativeAudioWeb extends WebPlugin implements NativeAudio {
     await this.stop(options);
     audio.loop = false;
     audio.currentTime = options.time ?? 0;
-    audio.removeEventListener("ended", this.onEnded);
-    audio.addEventListener("ended", this.onEnded);
+    audio.addEventListener("ended", (e) => this.onEnded(e), { once: true });
     return audio.play();
   }
 
