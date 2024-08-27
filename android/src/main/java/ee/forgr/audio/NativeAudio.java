@@ -343,23 +343,15 @@ public class NativeAudio
           if (asset != null) {
             asset.unload();
             audioAssetList.remove(audioId);
-            status = new JSObject();
-            status.put("status", "OK");
-            call.resolve(status);
+            call.resolve();
           } else {
-            status = new JSObject();
-            status.put("status", false);
-            call.resolve(status);
+            call.reject(ERROR_AUDIO_ASSET_MISSING + " - " + audioId);
           }
         } else {
-          status = new JSObject();
-          status.put("status", ERROR_AUDIO_ASSET_MISSING + " - " + audioId);
-          call.resolve(status);
+          call.reject(ERROR_AUDIO_ASSET_MISSING + " - " + audioId);
         }
       } else {
-        status = new JSObject();
-        status.put("status", ERROR_AUDIO_ID_MISSING);
-        call.resolve(status);
+        call.reject(ERROR_AUDIO_ID_MISSING);
       }
     } catch (Exception ex) {
       call.reject(ex.getMessage());
