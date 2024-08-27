@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.4.7](https://github.com/Cap-go/native-audio/compare/6.4.6...6.4.7) (2024-08-27)
+
+### [6.4.6](https://github.com/Cap-go/native-audio/compare/6.4.5...6.4.6) (2024-08-27)
+
+
+### Bug Fixes
+
+* android playback ([e541e47](https://github.com/Cap-go/native-audio/commit/e541e47f58264d467013995ab682215cb44d44b6))
+
 ### [6.4.5](https://github.com/Cap-go/native-audio/compare/6.4.4...6.4.5) (2024-08-27)
 
 
