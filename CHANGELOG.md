@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.4.10](https://github.com/Cap-go/native-audio/compare/6.4.9...6.4.10) (2024-08-27)
+
+
+### Bug Fixes
+
+* make unload return same in every platform ([0ec0d76](https://github.com/Cap-go/native-audio/commit/0ec0d769e9b72d02f498972a9e14dbc452db8af4))
+
 ### [6.4.9](https://github.com/Cap-go/native-audio/compare/6.4.8...6.4.9) (2024-08-27)
 
 
