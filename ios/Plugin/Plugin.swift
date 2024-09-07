@@ -184,6 +184,7 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
 
     @objc func getDuration(_ call: CAPPluginCall) {
         guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
+            call.resolve()
             return
         }
 
@@ -204,6 +205,7 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
 
     @objc func resume(_ call: CAPPluginCall) {
         guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
+            call.resolve()
             return
         }
         self.activateSession()
@@ -213,6 +215,7 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
 
     @objc func pause(_ call: CAPPluginCall) {
         guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
+            call.resolve()
             return
         }
 
@@ -227,6 +230,7 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
         do {
             try stopAudio(audioId: audioId)
             self.endSession()
+            call.resolve()
         } catch {
             call.reject(Constant.ErrorAssetNotFound)
         }
@@ -234,6 +238,7 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
 
     @objc func loop(_ call: CAPPluginCall) {
         guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
+            call.resolve()
             return
         }
 
@@ -259,6 +264,7 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
 
     @objc func setVolume(_ call: CAPPluginCall) {
         guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
+            call.resolve()
             return
         }
 
@@ -270,6 +276,7 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
 
     @objc func setRate(_ call: CAPPluginCall) {
         guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
+            call.resolve()
             return
         }
 
@@ -280,6 +287,7 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
 
     @objc func isPlaying(_ call: CAPPluginCall) {
         guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
+            call.resolve()
             return
         }
 
