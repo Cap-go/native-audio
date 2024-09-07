@@ -227,6 +227,7 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
         do {
             try stopAudio(audioId: audioId)
             self.endSession()
+            call.resolve()
         } catch {
             call.reject(Constant.ErrorAssetNotFound)
         }
