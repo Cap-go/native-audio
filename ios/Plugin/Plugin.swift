@@ -139,33 +139,33 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
             call.reject(Constant.ErrorAssetId)
             return
         }
+        if self.audioList.count == 0 {
+            call.reject("Audio list is empty")
+            return
+        }
         let queue = DispatchQueue(label: "ee.forgr.audio.complex.queue", qos: .userInitiated)
-
+        let asset = self.audioList[audioId]
+        if asset == nil {
+            call.reject(Constant.ErrorAssetNotFound)
+            return
+        }
         queue.async {
-            if self.audioList.count > 0 {
-                let asset = self.audioList[audioId]
-
-                if asset != nil {
-                    if asset is AudioAsset {
-                        let audioAsset = asset as? AudioAsset
-                        self.activateSession()
-                        if self.fadeMusic {
-                            audioAsset?.playWithFade(time: time)
-                        } else {
-                            audioAsset?.play(time: time, delay: delay)
-                        }
-                        call.resolve()
-                    } else if asset is Int32 {
-                        let audioAsset = asset as? NSNumber ?? 0
-                        self.activateSession()
-                        AudioServicesPlaySystemSound(SystemSoundID(audioAsset.intValue))
-                        call.resolve()
-                    } else {
-                        call.reject(Constant.ErrorAssetNotFound)
-                    }
+            if asset is AudioAsset {
+                let audioAsset = asset as? AudioAsset
+                self.activateSession()
+                if self.fadeMusic {
+                    audioAsset?.playWithFade(time: time)
+                } else {
+                    audioAsset?.play(time: time, delay: delay)
                 }
+                call.resolve()
+            } else if asset is Int32 {
+                let audioAsset = asset as? NSNumber ?? 0
+                self.activateSession()
+                AudioServicesPlaySystemSound(SystemSoundID(audioAsset.intValue))
+                call.resolve()
             } else {
-                call.reject("Audio list is empty")
+                call.reject(Constant.ErrorAssetNotFound)
             }
         }
     }
@@ -176,14 +176,16 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
             call.reject(Constant.ErrorAssetId)
             return nil
         }
-        if self.audioList.count > 0 {
-            let asset = self.audioList[audioId]
-            if asset != nil && asset is AudioAsset {
-                return asset as? AudioAsset
-            }
+        if self.audioList.count == 0 {
+            call.reject("Audio list is empty")
+            return nil
         }
-        call.reject(Constant.ErrorAssetNotFound + " - " + audioId)
-        return nil
+        let asset = self.audioList[audioId]
+        if asset == nil || !(asset is AudioAsset) {
+            call.reject(Constant.ErrorAssetNotFound + " - " + audioId)
+            return nil
+        }
+        return asset as? AudioAsset
     }
 
     @objc func getDuration(_ call: CAPPluginCall) {
@@ -228,6 +230,10 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
     @objc func stop(_ call: CAPPluginCall) {
         let audioId = call.getString(Constant.AssetIdKey) ?? ""
 
+        if self.audioList.count == 0 {
+            call.reject("Audio list is empty")
+            return
+        }
         do {
             try stopAudio(audioId: audioId)
             self.endSession()
@@ -248,16 +254,18 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
 
     @objc func unload(_ call: CAPPluginCall) {
         let audioId = call.getString(Constant.AssetIdKey) ?? ""
-        if self.audioList.count > 0 {
-            let asset = self.audioList[audioId]
-            if asset != nil && asset is AudioAsset {
-                guard let audioAsset = asset as? AudioAsset else {
-                    call.reject("Cannot cast to AudioAsset")
-                    return
-                }
-                audioAsset.unload()
-                self.audioList[audioId] = nil
+        if self.audioList.count == 0 {
+            call.reject("Audio list is empty")
+            return
+        }
+        let asset = self.audioList[audioId]
+        if asset != nil && asset is AudioAsset {
+            guard let audioAsset = asset as? AudioAsset else {
+                call.reject("Cannot cast to AudioAsset")
+                return
             }
+            audioAsset.unload()
+            self.audioList[audioId] = nil
         }
         call.resolve()
     }
@@ -299,109 +307,105 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
         let volume: Float?
         let delay: Float?
         var isLocalUrl: Bool = call.getBool("isUrl") ?? false
+        if audioId == "" {
+            call.reject(Constant.ErrorAssetId)
+            return
+        }
+        var assetPath: String = call.getString(Constant.AssetPathKey) ?? ""
 
-        if audioId != "" {
-            var assetPath: String = call.getString(Constant.AssetPathKey) ?? ""
+        if complex {
+            volume = call.getFloat("volume") ?? 1.0
+            channels = call.getInt("channels") ?? 1
+            delay = call.getFloat("delay") ?? 1.0
+        } else {
+            channels = 0
+            volume = 0
+            delay = 0
+            isLocalUrl = false
+        }
 
-            if complex {
-                volume = call.getFloat("volume") ?? 1.0
-                channels = call.getInt("channels") ?? 1
-                delay = call.getFloat("delay") ?? 1.0
+        if audioList.isEmpty {
+            audioList = [:]
+        }
+
+        let asset = audioList[audioId]
+        let queue = DispatchQueue(label: "ee.forgr.audio.simple.queue", qos: .userInitiated)
+        if asset != nil {
+            call.reject(Constant.ErrorAssetAlreadyLoaded + " - " + audioId)
+            return
+        }
+        queue.async {
+            var basePath: String?
+            if let url = URL(string: assetPath), url.scheme != nil {
+                // Handle remote URL
+                let remoteAudioAsset = RemoteAudioAsset(owner: self, withAssetId: audioId, withPath: assetPath, withChannels: channels, withVolume: volume, withFadeDelay: delay)
+                self.audioList[audioId] = remoteAudioAsset
+                call.resolve()
+                return
+            } else if isLocalUrl == false {
+                // Handle public folder
+                // if assetPath doesnt start with public/ add it
+                assetPath = assetPath.starts(with: "public/") ? assetPath : "public/" + assetPath
+
+                let assetPathSplit = assetPath.components(separatedBy: ".")
+                basePath = Bundle.main.path(forResource: assetPathSplit[0], ofType: assetPathSplit[1])
             } else {
-                channels = 0
-                volume = 0
-                delay = 0
-                isLocalUrl = false
+                // Handle local file URL
+                let fileURL = URL(fileURLWithPath: assetPath)
+                basePath = fileURL.path
             }
 
-            if audioList.isEmpty {
-                audioList = [:]
-            }
-
-            let asset = audioList[audioId]
-            let queue = DispatchQueue(label: "ee.forgr.audio.simple.queue", qos: .userInitiated)
-            queue.async {
-                if asset == nil {
-                    var basePath: String?
-                    if let url = URL(string: assetPath), url.scheme != nil {
-                        // Handle remote URL
-                        let remoteAudioAsset = RemoteAudioAsset(owner: self, withAssetId: audioId, withPath: assetPath, withChannels: channels, withVolume: volume, withFadeDelay: delay)
-                        self.audioList[audioId] = remoteAudioAsset
-                        call.resolve()
-                    } else if isLocalUrl == false {
-                        // Handle public folder
-                        // if assetPath doesnt start with public/ add it
-                        assetPath = assetPath.starts(with: "public/") ? assetPath : "public/" + assetPath
-
-                        let assetPathSplit = assetPath.components(separatedBy: ".")
-                        basePath = Bundle.main.path(forResource: assetPathSplit[0], ofType: assetPathSplit[1])
-                    } else {
-                        // Handle local file URL
-                        let fileURL = URL(fileURLWithPath: assetPath)
-                        basePath = fileURL.path
-                    }
-
-                    if let basePath = basePath, FileManager.default.fileExists(atPath: basePath) {
-                        if !complex {
-                            let soundFileUrl = URL(fileURLWithPath: basePath)
-                            var soundId = SystemSoundID()
-                            AudioServicesCreateSystemSoundID(soundFileUrl as CFURL, &soundId)
-                            self.audioList[audioId] = NSNumber(value: Int32(soundId))
-                            call.resolve()
-                        } else {
-                            let audioAsset = AudioAsset(
-                                owner: self,
-                                withAssetId: audioId, withPath: basePath, withChannels: channels,
-                                withVolume: volume, withFadeDelay: delay)
-                            self.audioList[audioId] = audioAsset
-                            call.resolve()
-                        }
-                    } else {
-                        if FileManager.default.fileExists(atPath: assetPath) {
-                            // Use the original assetPath
-                            if !complex {
-                                let soundFileUrl = URL(fileURLWithPath: assetPath)
-                                var soundId = SystemSoundID()
-                                AudioServicesCreateSystemSoundID(soundFileUrl as CFURL, &soundId)
-                                self.audioList[audioId] = NSNumber(value: Int32(soundId))
-                                call.resolve()
-                            } else {
-                                let audioAsset = AudioAsset(
-                                    owner: self,
-                                    withAssetId: audioId, withPath: assetPath, withChannels: channels,
-                                    withVolume: volume, withFadeDelay: delay)
-                                self.audioList[audioId] = audioAsset
-                                call.resolve()
-                            }
-                        } else {
-                            let attributes = try? FileManager.default.attributesOfItem(atPath: assetPath)
-                            call.reject(Constant.ErrorAssetPath + " - " + assetPath)
-                        }
-                    }
+            if let basePath = basePath, FileManager.default.fileExists(atPath: basePath) {
+                if !complex {
+                    let soundFileUrl = URL(fileURLWithPath: basePath)
+                    var soundId = SystemSoundID()
+                    AudioServicesCreateSystemSoundID(soundFileUrl as CFURL, &soundId)
+                    self.audioList[audioId] = NSNumber(value: Int32(soundId))
                 } else {
-                    call.reject(Constant.ErrorAssetAlreadyLoaded + " - " + audioId)
+                    let audioAsset = AudioAsset(
+                        owner: self,
+                        withAssetId: audioId, withPath: basePath, withChannels: channels,
+                        withVolume: volume, withFadeDelay: delay)
+                    self.audioList[audioId] = audioAsset
+                }
+            } else {
+                if !FileManager.default.fileExists(atPath: assetPath) {
+                    call.reject(Constant.ErrorAssetPath + " - " + assetPath)
+                    return
+                }
+                // Use the original assetPath
+                if !complex {
+                    let soundFileUrl = URL(fileURLWithPath: assetPath)
+                    var soundId = SystemSoundID()
+                    AudioServicesCreateSystemSoundID(soundFileUrl as CFURL, &soundId)
+                    self.audioList[audioId] = NSNumber(value: Int32(soundId))
+                } else {
+                    let audioAsset = AudioAsset(
+                        owner: self,
+                        withAssetId: audioId, withPath: assetPath, withChannels: channels,
+                        withVolume: volume, withFadeDelay: delay)
+                    self.audioList[audioId] = audioAsset
                 }
             }
+            call.resolve()
         }
     }
 
     private func stopAudio(audioId: String) throws {
-        if self.audioList.count > 0 {
-            let asset = self.audioList[audioId]
+        let asset = self.audioList[audioId]
 
-            if asset != nil {
-                if asset is AudioAsset {
-                    let audioAsset = asset as? AudioAsset
+        if asset == nil {
+            throw MyError.runtimeError(Constant.ErrorAssetNotFound)
+        }
+        if !(asset is AudioAsset) {
+            throw MyError.runtimeError(Constant.ErrorAssetNotFound)
+        }
+        let audioAsset = asset as? AudioAsset
 
-                    if self.fadeMusic {
-                        audioAsset?.playWithFade(time: audioAsset?.getCurrentTime() ?? 0)
-                    } else {
-                        audioAsset?.stop()
-                    }
-                }
-            } else {
-                throw MyError.runtimeError(Constant.ErrorAssetNotFound)
-            }
+        if self.fadeMusic {
+            audioAsset?.playWithFade(time: audioAsset?.getCurrentTime() ?? 0)
+        } else {
+            audioAsset?.stop()
         }
     }
 }

@@ -395,7 +395,7 @@ public class NativeAudio
         if (asset != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
           asset.setRate(rate);
         }
-    call.resolve();
+        call.resolve();
       } else {
         call.reject(ERROR_AUDIO_ASSET_MISSING);
       }
