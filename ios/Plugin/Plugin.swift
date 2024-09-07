@@ -135,33 +135,37 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
         let audioId = call.getString(Constant.AssetIdKey) ?? ""
         let time = call.getDouble("time") ?? 0
         let delay = call.getDouble("delay") ?? 0
-        if audioId != "" {
-            let queue = DispatchQueue(label: "ee.forgr.audio.complex.queue", qos: .userInitiated)
+        if audioId == "" {
+            call.reject(Constant.ErrorAssetId)
+            return
+        }
+        let queue = DispatchQueue(label: "ee.forgr.audio.complex.queue", qos: .userInitiated)
 
-            queue.async {
-                if self.audioList.count > 0 {
-                    let asset = self.audioList[audioId]
+        queue.async {
+            if self.audioList.count > 0 {
+                let asset = self.audioList[audioId]
 
-                    if asset != nil {
-                        if asset is AudioAsset {
-                            let audioAsset = asset as? AudioAsset
-                            self.activateSession()
-                            if self.fadeMusic {
-                                audioAsset?.playWithFade(time: time)
-                            } else {
-                                audioAsset?.play(time: time, delay: delay)
-                            }
-                            call.resolve()
-                        } else if asset is Int32 {
-                            let audioAsset = asset as? NSNumber ?? 0
-                            self.activateSession()
-                            AudioServicesPlaySystemSound(SystemSoundID(audioAsset.intValue))
-                            call.resolve()
+                if asset != nil {
+                    if asset is AudioAsset {
+                        let audioAsset = asset as? AudioAsset
+                        self.activateSession()
+                        if self.fadeMusic {
+                            audioAsset?.playWithFade(time: time)
                         } else {
-                            call.reject(Constant.ErrorAssetNotFound)
+                            audioAsset?.play(time: time, delay: delay)
                         }
+                        call.resolve()
+                    } else if asset is Int32 {
+                        let audioAsset = asset as? NSNumber ?? 0
+                        self.activateSession()
+                        AudioServicesPlaySystemSound(SystemSoundID(audioAsset.intValue))
+                        call.resolve()
+                    } else {
+                        call.reject(Constant.ErrorAssetNotFound)
                     }
                 }
+            } else {
+                call.reject("Audio list is empty")
             }
         }
     }
