@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.4.16](https://github.com/Cap-go/native-audio/compare/6.4.15...6.4.16) (2024-09-07)
+
+
+### Bug Fixes
+
+* play add reject ([2bbdead](https://github.com/Cap-go/native-audio/commit/2bbdead62452a62888aa565a5bf4b0daa62e99a3))
+
 ### [6.4.15](https://github.com/Cap-go/native-audio/compare/6.4.14...6.4.15) (2024-09-07)
 
 
