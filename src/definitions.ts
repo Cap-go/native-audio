@@ -112,7 +112,7 @@ export interface NativeAudio {
    * @param option {@link Assets}
    * @returns {Promise<boolean>}
    */
-  isPreloaded(options: PreloadOptions): Promise<boolean>;
+  isPreloaded(options: PreloadOptions): Promise<{ found: boolean }>;
   /**
    * Play an audio file
    * @since 5.0.0
