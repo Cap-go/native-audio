@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.4.18](https://github.com/Cap-go/native-audio/compare/6.4.17...6.4.18) (2024-09-14)
+
+
+### Bug Fixes
+
+* definition of isPreload ([2f0df01](https://github.com/Cap-go/native-audio/commit/2f0df0104242f48f413e06703e87627b2947cf7d))
+
 ### [6.4.17](https://github.com/Cap-go/native-audio/compare/6.4.16...6.4.17) (2024-09-07)
 
 
