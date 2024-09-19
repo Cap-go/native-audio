@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.4.19](https://github.com/Cap-go/native-audio/compare/6.4.18...6.4.19) (2024-09-19)
+
+
+### Bug Fixes
+
+* compete event on web ([eb2ee7b](https://github.com/Cap-go/native-audio/commit/eb2ee7b0e4eee4affb192845271aee0de8e645c6))
+
 ### [6.4.18](https://github.com/Cap-go/native-audio/compare/6.4.17...6.4.18) (2024-09-14)
 
 
