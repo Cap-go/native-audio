@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.4.20](https://github.com/Cap-go/native-audio/compare/6.4.19...6.4.20) (2024-09-20)
+
+
+### Bug Fixes
+
+* lint issue ([5f52058](https://github.com/Cap-go/native-audio/commit/5f52058c5c837f752c22d6d8292f9f8b306546f8))
+
 ### [6.4.19](https://github.com/Cap-go/native-audio/compare/6.4.18...6.4.19) (2024-09-19)
 
 
