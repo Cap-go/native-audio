@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.4.21](https://github.com/Cap-go/native-audio/compare/6.4.20...6.4.21) (2024-09-23)
+
+
+### Bug Fixes
+
+* remote playback ([bce1bad](https://github.com/Cap-go/native-audio/commit/bce1bad8ef29f732f6a379afbe6fffe19ea2498d))
+
 ### [6.4.20](https://github.com/Cap-go/native-audio/compare/6.4.19...6.4.20) (2024-09-20)
 
 
