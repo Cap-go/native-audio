@@ -13,6 +13,7 @@ public class AudioAsset {
   private int playIndex = 0;
   private final String assetId;
   protected final NativeAudio owner;
+  protected AudioCompletionListener completionListener;
 
   AudioAsset(
     NativeAudio owner,
@@ -166,5 +167,15 @@ public class AudioAsset {
     if (audioList.size() != 1) return false;
 
     return audioList.get(playIndex).isPlaying();
+  }
+
+  public void setCompletionListener(AudioCompletionListener listener) {
+    this.completionListener = listener;
+  }
+
+  protected void notifyCompletion() {
+    if (completionListener != null) {
+      completionListener.onCompletion(this.assetId);
+    }
   }
 }

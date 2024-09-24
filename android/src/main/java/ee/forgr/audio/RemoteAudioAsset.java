@@ -45,6 +45,9 @@ public class RemoteAudioAsset extends AudioAsset {
         isPrepared = true;
         Log.d(TAG, "MediaPlayer prepared for " + uri.toString());
       });
+      mediaPlayer.setOnCompletionListener(mp -> {
+        notifyCompletion();
+      });
       mediaPlayer.setOnErrorListener((mp, what, extra) -> {
         Log.e(TAG, "MediaPlayer error: " + what + ", " + extra);
         return false;
