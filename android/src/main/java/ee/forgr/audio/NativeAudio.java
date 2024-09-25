@@ -504,6 +504,7 @@ public class NativeAudio
               audioChannelNum,
               volume
             );
+            remoteAudioAsset.setCompletionListener(this::dispatchComplete);
             audioAssetList.put(audioId, remoteAudioAsset);
           } else if (
             uri.getScheme() != null && uri.getScheme().equals("file")
@@ -535,6 +536,7 @@ public class NativeAudio
               audioChannelNum,
               volume
             );
+            asset.setCompletionListener(this::dispatchComplete);
             audioAssetList.put(audioId, asset);
           } else {
             throw new IllegalArgumentException(
