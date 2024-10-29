@@ -118,7 +118,7 @@ public class AudioDispatcher
         this.stop();
 
         if (this.owner != null) {
-          this.owner.dispatchComplete();
+          this.owner.notifyCompletion();
         }
       }
     } catch (Exception ex) {

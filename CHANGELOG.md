@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.4.22](https://github.com/Cap-go/native-audio/compare/6.4.21...6.4.22) (2024-10-29)
+
+
+### Bug Fixes
+
+* Ensure "complete" event is dispatched on Android after playing a remote audio asset ([2363425](https://github.com/Cap-go/native-audio/commit/23634259bf590d693eaa4027bbe8a185ef97b2b5))
+
+### [6.4.21](https://github.com/Cap-go/native-audio/compare/6.4.20...6.4.21) (2024-09-23)
+
+
+### Bug Fixes
+
+* remote playback ([bce1bad](https://github.com/Cap-go/native-audio/commit/bce1bad8ef29f732f6a379afbe6fffe19ea2498d))
+
 ### [6.4.20](https://github.com/Cap-go/native-audio/compare/6.4.19...6.4.20) (2024-09-20)
 
 

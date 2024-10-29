@@ -252,7 +252,7 @@ Load an audio file
 ### isPreloaded(...)
 
 ```typescript
-isPreloaded(options: PreloadOptions) => Promise<boolean>
+isPreloaded(options: PreloadOptions) => Promise<{ found: boolean; }>
 ```
 
 Check if an audio file is preloaded
@@ -261,7 +261,7 @@ Check if an audio file is preloaded
 | ------------- | --------------------------------------------------------- |
 | **`options`** | <code><a href="#preloadoptions">PreloadOptions</a></code> |
 
-**Returns:** <code>Promise&lt;boolean&gt;</code>
+**Returns:** <code>Promise&lt;{ found: boolean; }&gt;</code>
 
 **Since:** 6.1.0
 
