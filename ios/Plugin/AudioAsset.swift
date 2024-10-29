@@ -59,6 +59,16 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
         return player.currentTime
     }
 
+    func setCurrentTime(time: TimeInterval) {
+        if channels.count != 1 {
+            return
+        }
+
+        let player: AVAudioPlayer = channels[playIndex]
+        
+        player.currentTime = time
+    }
+
     func getDuration() -> TimeInterval {
         if channels.count != 1 {
             return 0

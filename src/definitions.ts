@@ -175,6 +175,13 @@ export interface NativeAudio {
   setRate(options: { assetId: string; rate: number }): Promise<void>;
   /**
    * Set the current time of an audio file
+   * @since 6.5.0
+   * @param option {@link AssetPlayOptions}
+   * @returns {Promise<void>}
+   */
+  setCurrentTime(options: { assetId: string, time: number }): Promise<void>;
+  /**
+   * Get the current time of an audio file
    * @since 5.0.0
    * @param option {@link AssetPlayOptions}
    * @returns {Promise<{ currentTime: number }>}
