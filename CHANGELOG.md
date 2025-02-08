@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.5.0](https://github.com/Cap-go/native-audio/compare/6.4.23...6.5.0) (2025-02-08)
+
+
+### Features
+
+* **setCurrentTime:** Added a setCurrentTime function (not tested) ([e52b44d](https://github.com/Cap-go/native-audio/commit/e52b44de834323596c0c8d23f77258b61c619a80))
+
 ### [6.4.23](https://github.com/Cap-go/native-audio/compare/6.4.22...6.4.23) (2024-10-29)
 
 
