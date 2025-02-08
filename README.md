@@ -404,13 +404,30 @@ Set the rate of an audio file
 --------------------
 
 
+### setCurrentTime(...)
+
+```typescript
+setCurrentTime(options: { assetId: string; time: number; }) => Promise<void>
+```
+
+Set the current time of an audio file
+
+| Param         | Type                                            |
+| ------------- | ----------------------------------------------- |
+| **`options`** | <code>{ assetId: string; time: number; }</code> |
+
+**Since:** 6.5.0
+
+--------------------
+
+
 ### getCurrentTime(...)
 
 ```typescript
 getCurrentTime(options: { assetId: string; }) => Promise<{ currentTime: number; }>
 ```
 
-Set the current time of an audio file
+Get the current time of an audio file
 
 | Param         | Type                              |
 | ------------- | --------------------------------- |
