@@ -179,7 +179,7 @@ export interface NativeAudio {
    * @param option {@link AssetPlayOptions}
    * @returns {Promise<void>}
    */
-  setCurrentTime(options: { assetId: string, time: number }): Promise<void>;
+  setCurrentTime(options: { assetId: string; time: number }): Promise<void>;
   /**
    * Get the current time of an audio file
    * @since 5.0.0
