@@ -11,13 +11,39 @@ enum MyError: Error {
 /// here: https://capacitor.ionicframework.com/docs/plugins/ios
 @objc(NativeAudio)
 public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
-
-    var audioList: [String: Any] = [:]
+    public let identifier = "NativeAudio"
+    public let jsName = "NativeAudio"
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "configure", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "preload", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "isPreloaded", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "play", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "pause", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "stop", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "loop", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "unload", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "setVolume", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "setRate", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "isPlaying", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getCurrentTime", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getDuration", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "resume", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "setCurrentTime", returnType: CAPPluginReturnPromise)
+    ]
+    private let audioQueue = DispatchQueue(label: "ee.forgr.audio.queue", qos: .userInitiated)
+    private var audioList: [String: Any] = [:] {
+        didSet {
+            // Ensure audioList modifications happen on audioQueue
+            assert(DispatchQueue.getSpecific(key: queueKey) != nil)
+        }
+    }
+    private let queueKey = DispatchSpecificKey<Bool>()
     var fadeMusic = false
     var session = AVAudioSession.sharedInstance()
 
     override public func load() {
         super.load()
+        audioQueue.setSpecific(key: queueKey, value: true)
 
         self.fadeMusic = false
 
@@ -102,9 +128,12 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
             call.reject("Missing assetId")
             return
         }
-        call.resolve([
-            "found": self.audioList[assetId] != nil
-        ])
+        
+        audioQueue.sync {
+            call.resolve([
+                "found": self.audioList[assetId] != nil
+            ])
+        }
     }
 
     @objc func preload(_ call: CAPPluginCall) {
@@ -135,34 +164,34 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
         let audioId = call.getString(Constant.AssetIdKey) ?? ""
         let time = call.getDouble("time") ?? 0
         let delay = call.getDouble("delay") ?? 0
-        if audioId == "" {
+        
+        if audioId.isEmpty {
             call.reject(Constant.ErrorAssetId)
             return
         }
-        if self.audioList.count == 0 {
-            call.reject("Audio list is empty")
-            return
-        }
-        let queue = DispatchQueue(label: "ee.forgr.audio.complex.queue", qos: .userInitiated)
-        let asset = self.audioList[audioId]
-        if asset == nil {
-            call.reject(Constant.ErrorAssetNotFound)
-            return
-        }
-        queue.async {
-            if asset is AudioAsset {
-                let audioAsset = asset as? AudioAsset
+        
+        audioQueue.async {
+            guard !self.audioList.isEmpty else {
+                call.reject("Audio list is empty")
+                return
+            }
+            
+            guard let asset = self.audioList[audioId] else {
+                call.reject(Constant.ErrorAssetNotFound)
+                return
+            }
+            
+            if let audioAsset = asset as? AudioAsset {
                 self.activateSession()
                 if self.fadeMusic {
-                    audioAsset?.playWithFade(time: time)
+                    audioAsset.playWithFade(time: time)
                 } else {
-                    audioAsset?.play(time: time, delay: delay)
+                    audioAsset.play(time: time, delay: delay)
                 }
                 call.resolve()
-            } else if asset is Int32 {
-                let audioAsset = asset as? NSNumber ?? 0
+            } else if let audioNumber = asset as? NSNumber {
                 self.activateSession()
-                AudioServicesPlaySystemSound(SystemSoundID(audioAsset.intValue))
+                AudioServicesPlaySystemSound(SystemSoundID(audioNumber.intValue))
                 call.resolve()
             } else {
                 call.reject(Constant.ErrorAssetNotFound)
@@ -172,143 +201,183 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
 
     @objc private func getAudioAsset(_ call: CAPPluginCall) -> AudioAsset? {
         let audioId = call.getString(Constant.AssetIdKey) ?? ""
-        if audioId == "" {
+        if audioId.isEmpty {
             call.reject(Constant.ErrorAssetId)
             return nil
         }
-        if self.audioList.count == 0 {
-            call.reject("Audio list is empty")
+        
+        var asset: AudioAsset?
+        audioQueue.sync {
+            if self.audioList.isEmpty {
+                call.reject("Audio list is empty")
+                return
+            }
+            
+            guard let foundAsset = self.audioList[audioId] as? AudioAsset else {
+                call.reject(Constant.ErrorAssetNotFound + " - " + audioId)
+                return
+            }
+            asset = foundAsset
+        }
+        
+        if asset == nil {
+            call.reject("Failed to get audio asset")
             return nil
         }
-        let asset = self.audioList[audioId]
-        if asset == nil || !(asset is AudioAsset) {
-            call.reject(Constant.ErrorAssetNotFound + " - " + audioId)
-            return nil
-        }
-        return asset as? AudioAsset
+        return asset
     }
 
     @objc func setCurrentTime(_ call: CAPPluginCall) {
-        guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
-            return
-        }
+        audioQueue.async {
+            guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
+                call.reject("Failed to get audio asset")
+                return
+            }
 
-        let time = call.getDouble("time") ?? 0
-        audioAsset.setCurrentTime(time: time)
-        call.resolve()
+            let time = call.getDouble("time") ?? 0
+            audioAsset.setCurrentTime(time: time)
+            call.resolve()
+        }
     }
 
     @objc func getDuration(_ call: CAPPluginCall) {
-        guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
-            return
-        }
+        audioQueue.async {
+            guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
+                call.reject("Failed to get audio asset")
+                return
+            }
 
-        call.resolve([
-            "duration": audioAsset.getDuration()
-        ])
+            call.resolve([
+                "duration": audioAsset.getDuration()
+            ])
+        }
     }
 
     @objc func getCurrentTime(_ call: CAPPluginCall) {
-        guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
-            return
-        }
+        audioQueue.async {
+            guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
+                call.reject("Failed to get audio asset")
+                return
+            }
 
-        call.resolve([
-            "currentTime": audioAsset.getCurrentTime()
-        ])
+            call.resolve([
+                "currentTime": audioAsset.getCurrentTime()
+            ])
+        }
     }
 
     @objc func resume(_ call: CAPPluginCall) {
-        guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
-            return
+        audioQueue.async {
+            guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
+                call.reject("Failed to get audio asset")
+                return
+            }
+            self.activateSession()
+            audioAsset.resume()
+            call.resolve()
         }
-        self.activateSession()
-        audioAsset.resume()
-        call.resolve()
     }
 
     @objc func pause(_ call: CAPPluginCall) {
-        guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
-            return
-        }
+        audioQueue.async {
+            guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
+                call.reject("Failed to get audio asset")
+                return
+            }
 
-        audioAsset.pause()
-        self.endSession()
-        call.resolve()
+            audioAsset.pause()
+            self.endSession()
+            call.resolve()
+        }
     }
 
     @objc func stop(_ call: CAPPluginCall) {
         let audioId = call.getString(Constant.AssetIdKey) ?? ""
-
-        if self.audioList.count == 0 {
-            call.reject("Audio list is empty")
-            return
-        }
-        do {
-            try stopAudio(audioId: audioId)
-            self.endSession()
-            call.resolve()
-        } catch {
-            call.reject(Constant.ErrorAssetNotFound)
+        
+        audioQueue.async {
+            guard !self.audioList.isEmpty else {
+                call.reject("Audio list is empty")
+                return
+            }
+            
+            do {
+                try self.stopAudio(audioId: audioId)
+                self.endSession()
+                call.resolve()
+            } catch {
+                call.reject(Constant.ErrorAssetNotFound)
+            }
         }
     }
 
     @objc func loop(_ call: CAPPluginCall) {
-        guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
-            return
-        }
+        audioQueue.async {
+            guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
+                call.reject("Failed to get audio asset")
+                return
+            }
 
-        audioAsset.loop()
-        call.resolve()
+            audioAsset.loop()
+            call.resolve()
+        }
     }
 
     @objc func unload(_ call: CAPPluginCall) {
         let audioId = call.getString(Constant.AssetIdKey) ?? ""
-        if self.audioList.count == 0 {
-            call.reject("Audio list is empty")
-            return
-        }
-        let asset = self.audioList[audioId]
-        if asset != nil && asset is AudioAsset {
-            guard let audioAsset = asset as? AudioAsset else {
-                call.reject("Cannot cast to AudioAsset")
+        
+        audioQueue.async {
+            guard !self.audioList.isEmpty else {
+                call.reject("Audio list is empty")
                 return
             }
-            audioAsset.unload()
-            self.audioList[audioId] = nil
+            
+            if let asset = self.audioList[audioId] as? AudioAsset {
+                asset.unload()
+                self.audioList[audioId] = nil
+                call.resolve()
+            } else {
+                call.reject("Cannot cast to AudioAsset")
+            }
         }
-        call.resolve()
     }
 
     @objc func setVolume(_ call: CAPPluginCall) {
-        guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
-            return
+        audioQueue.async {
+            guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
+                call.reject("Failed to get audio asset")
+                return
+            }
+
+            let volume = call.getFloat(Constant.Volume) ?? 1.0
+            audioAsset.setVolume(volume: volume as NSNumber)
+            call.resolve()
         }
-
-        let volume = call.getFloat(Constant.Volume) ?? 1.0
-
-        audioAsset.setVolume(volume: volume as NSNumber)
-        call.resolve()
     }
 
     @objc func setRate(_ call: CAPPluginCall) {
-        guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
-            return
-        }
+        audioQueue.async {
+            guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
+                call.reject("Failed to get audio asset")
+                return
+            }
 
-        let rate = call.getFloat(Constant.Rate) ?? 1.0
-        audioAsset.setRate(rate: rate as NSNumber)
-        call.resolve()
+            let rate = call.getFloat(Constant.Rate) ?? 1.0
+            audioAsset.setRate(rate: rate as NSNumber)
+            call.resolve()
+        }
     }
 
     @objc func isPlaying(_ call: CAPPluginCall) {
-        guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
-            return
-        }
+        audioQueue.async {
+            guard let audioAsset: AudioAsset = self.getAudioAsset(call) else {
+                call.reject("Failed to get audio asset")
+                return
+            }
 
-        call.resolve([
-            "isPlaying": audioAsset.isPlaying()
-        ])
+            call.resolve([
+                "isPlaying": audioAsset.isPlaying()
+            ])
+        }
     }
 
     private func preloadAsset(_ call: CAPPluginCall, isComplex complex: Bool) {
@@ -402,20 +471,20 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
     }
 
     private func stopAudio(audioId: String) throws {
-        let asset = self.audioList[audioId]
-
-        if asset == nil {
+        var asset: AudioAsset?
+        
+        audioQueue.sync {
+            asset = self.audioList[audioId] as? AudioAsset
+        }
+        
+        guard let audioAsset = asset else {
             throw MyError.runtimeError(Constant.ErrorAssetNotFound)
         }
-        if !(asset is AudioAsset) {
-            throw MyError.runtimeError(Constant.ErrorAssetNotFound)
-        }
-        let audioAsset = asset as? AudioAsset
 
         if self.fadeMusic {
-            audioAsset?.playWithFade(time: audioAsset?.getCurrentTime() ?? 0)
+            audioAsset.playWithFade(time: audioAsset.getCurrentTime())
         } else {
-            audioAsset?.stop()
+            audioAsset.stop()
         }
     }
 }
