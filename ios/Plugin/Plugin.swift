@@ -128,7 +128,7 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
             call.reject("Missing assetId")
             return
         }
-        
+
         audioQueue.sync {
             call.resolve([
                 "found": self.audioList[assetId] != nil
@@ -164,23 +164,23 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
         let audioId = call.getString(Constant.AssetIdKey) ?? ""
         let time = call.getDouble("time") ?? 0
         let delay = call.getDouble("delay") ?? 0
-        
+
         if audioId.isEmpty {
             call.reject(Constant.ErrorAssetId)
             return
         }
-        
+
         audioQueue.async {
             guard !self.audioList.isEmpty else {
                 call.reject("Audio list is empty")
                 return
             }
-            
+
             guard let asset = self.audioList[audioId] else {
                 call.reject(Constant.ErrorAssetNotFound)
                 return
             }
-            
+
             if let audioAsset = asset as? AudioAsset {
                 self.activateSession()
                 if self.fadeMusic {
@@ -205,21 +205,21 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
             call.reject(Constant.ErrorAssetId)
             return nil
         }
-        
+
         var asset: AudioAsset?
         audioQueue.sync {
             if self.audioList.isEmpty {
                 call.reject("Audio list is empty")
                 return
             }
-            
+
             guard let foundAsset = self.audioList[audioId] as? AudioAsset else {
                 call.reject(Constant.ErrorAssetNotFound + " - " + audioId)
                 return
             }
             asset = foundAsset
         }
-        
+
         if asset == nil {
             call.reject("Failed to get audio asset")
             return nil
@@ -293,13 +293,13 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
 
     @objc func stop(_ call: CAPPluginCall) {
         let audioId = call.getString(Constant.AssetIdKey) ?? ""
-        
+
         audioQueue.async {
             guard !self.audioList.isEmpty else {
                 call.reject("Audio list is empty")
                 return
             }
-            
+
             do {
                 try self.stopAudio(audioId: audioId)
                 self.endSession()
@@ -324,13 +324,13 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
 
     @objc func unload(_ call: CAPPluginCall) {
         let audioId = call.getString(Constant.AssetIdKey) ?? ""
-        
+
         audioQueue.async {
             guard !self.audioList.isEmpty else {
                 call.reject("Audio list is empty")
                 return
             }
-            
+
             if let asset = self.audioList[audioId] as? AudioAsset {
                 asset.unload()
                 self.audioList[audioId] = nil
@@ -472,11 +472,11 @@ public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
 
     private func stopAudio(audioId: String) throws {
         var asset: AudioAsset?
-        
+
         audioQueue.sync {
             asset = self.audioList[audioId] as? AudioAsset
         }
-        
+
         guard let audioAsset = asset else {
             throw MyError.runtimeError(Constant.ErrorAssetNotFound)
         }
