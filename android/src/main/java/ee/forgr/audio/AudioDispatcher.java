@@ -58,7 +58,7 @@ public class AudioDispatcher
 
   public void setCurrentPosition(double time) {
     if (mediaState == PLAYING || mediaState == PAUSE) {
-        mediaPlayer.seekTo((int) (time * 1000));
+      mediaPlayer.seekTo((int) (time * 1000));
     }
   }
 

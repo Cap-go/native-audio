@@ -73,7 +73,7 @@ public class AudioAsset {
     AudioDispatcher audio = audioList.get(playIndex);
 
     if (audio != null) {
-        audio.setCurrentPosition(time);
+      audio.setCurrentPosition(time);
     }
   }
 
