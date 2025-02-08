@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [7.1.4](https://github.com/Cap-go/native-audio/compare/7.1.3...7.1.4) (2025-02-08)
+
+
+### Bug Fixes
+
+* remove old lock ([056b952](https://github.com/Cap-go/native-audio/commit/056b95289771a8873dfe2cf8c39f33d6579ba9f6))
+
 ### [7.1.3](https://github.com/Cap-go/native-audio/compare/7.1.2...7.1.3) (2025-02-08)
 
 
