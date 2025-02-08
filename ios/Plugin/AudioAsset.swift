@@ -65,7 +65,7 @@ public class AudioAsset: NSObject, AVAudioPlayerDelegate {
         }
 
         let player: AVAudioPlayer = channels[playIndex]
-        
+
         player.currentTime = time
     }
 

@@ -25,7 +25,10 @@ export class NativeAudioWeb extends WebPlugin implements NativeAudio {
     return audio.pause();
   }
 
-  async setCurrentTime(options: { assetId: string; time: number; }): Promise<void> {
+  async setCurrentTime(options: {
+    assetId: string;
+    time: number;
+  }): Promise<void> {
     const audio: HTMLAudioElement = this.getAudioAsset(options.assetId).audio;
     audio.currentTime = options.time;
     return;
