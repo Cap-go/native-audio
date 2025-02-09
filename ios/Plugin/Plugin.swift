@@ -10,7 +10,7 @@ enum MyError: Error {
 /// Please read the Capacitor iOS Plugin Development Guide
 /// here: https://capacitor.ionicframework.com/docs/plugins/ios
 @objc(NativeAudio)
-public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate {
+public class NativeAudio: CAPPlugin, AVAudioPlayerDelegate, CAPBridgedPlugin {
     public let identifier = "NativeAudio"
     public let jsName = "NativeAudio"
     public let pluginMethods: [CAPPluginMethod] = [
